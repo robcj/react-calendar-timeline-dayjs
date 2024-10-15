@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 import Timeline from 'react-calendar-timeline'
 
@@ -23,12 +23,12 @@ export default class App extends Component {
     super(props)
 
     const { groups, items } = generateFakeData()
-    const defaultTimeStart = moment()
+    const defaultTimeStart = dayjs()
       .startOf('day')
       .toDate()
-    const defaultTimeEnd = moment()
+    const defaultTimeEnd = dayjs()
       .startOf('day')
-      .add(1, 'day')
+      .add({days: 1})
       .toDate()
 
     // convert every 2 groups out of 3 to nodes, leaving the first as the root

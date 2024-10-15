@@ -1,9 +1,8 @@
-# ⚠️⚠️⚠️⚠️ HELP WANTED
-please email me [ahmad.ilaiwi@gmail.com](mailto:ahmad.ilaiwi@gmail.com) and we will setup some time to speak and see if you can help maintain this library.
-
-# React Calendar Timeline
+# React Calendar Timeline (dayjs)
 
 A modern and responsive React timeline component.
+
+Forked from react-calendar-timeline to use dayjs instead of moment.js
 
 ![calendar demo](https://raw.githubusercontent.com/namespace-ee/react-calendar-timeline/master/demo.gif)
 
@@ -22,24 +21,24 @@ Checkout the [examples here](https://github.com/namespace-ee/react-calendar-time
 # Getting started
 
 ```bash
-# via yarn
-yarn add react-calendar-timeline
+# via yarn not available
+# yarn add react-calendar-timeline-dayjs
 
 # via npm
-npm install --save react-calendar-timeline
+npm install --save react-calendar-timeline-dayjs
 ```
 
-`react-calendar-timeline` has [react](https://reactjs.org/), [react-dom](https://reactjs.org/docs/react-dom.html), [`moment`](http://momentjs.com/) and [`interactjs`](http://interactjs.io/docs/) as peer dependencies.
+`react-calendar-timeline-dayjs` has [react](https://reactjs.org/), [react-dom](https://reactjs.org/docs/react-dom.html), [`dayjs`](http://day.js.org/) and [`interactjs`](http://interactjs.io/docs/) as peer dependencies.
 
 # Usage
 
 At the very minimum:
 
 ```jsx
-import Timeline from 'react-calendar-timeline'
+import Timeline from 'react-calendar-timeline-dayjs'
 // make sure you include the timeline stylesheet or the timeline will not be styled
-import 'react-calendar-timeline/lib/Timeline.css'
-import moment from 'moment'
+import 'react-calendar-timeline-dayjs/lib/Timeline.css'
+import dayjs from 'dayjs'
 
 const groups = [{ id: 1, title: 'group 1' }, { id: 2, title: 'group 2' }]
 
@@ -48,22 +47,22 @@ const items = [
     id: 1,
     group: 1,
     title: 'item 1',
-    start_time: moment(),
-    end_time: moment().add(1, 'hour')
+    start_time: dayjs(),
+    end_time: dayjs().add({hours: 1})
   },
   {
     id: 2,
     group: 2,
     title: 'item 2',
-    start_time: moment().add(-0.5, 'hour'),
-    end_time: moment().add(0.5, 'hour')
+    start_time: dayjs().add({hours: -0.5}),
+    end_time: dayjs().add{hours: 0.5})
   },
   {
     id: 3,
     group: 1,
     title: 'item 3',
-    start_time: moment().add(2, 'hour'),
-    end_time: moment().add(3, 'hour')
+    start_time: dayjs().add({hours: 2}),
+    end_time: dayjs().add({hours: 3})
   }
 ]
 
@@ -73,8 +72,8 @@ ReactDOM.render(
     <Timeline
       groups={groups}
       items={items}
-      defaultTimeStart={moment().add(-12, 'hour')}
-      defaultTimeEnd={moment().add(12, 'hour')}
+      defaultTimeStart={dayjs().add({hours: -12})}
+      defaultTimeEnd={dayjs().add({hours: 12})}
     />
   </div>,
   document.getElementById('root')
@@ -131,11 +130,11 @@ Expects either a vanilla JS array or an immutableJS array, consisting of objects
 }
 ```
 
-The preferred (fastest) option is to give Unix timestamps in milliseconds for `start_time` and `end_time`. Objects that convert to them (JavaScript `Date` or `moment()`) will also work, but will be a lot slower.
+The preferred (fastest) option is to give Unix timestamps in milliseconds for `start_time` and `end_time`. Objects that convert to them (JavaScript `Date` or `dayjs()`) will also work, but will be a lot slower.
 
 ## defaultTimeStart and defaultTimeEnd
 
-Unless overridden by `visibleTimeStart` and `visibleTimeEnd`, specify where the calendar begins and where it ends. This parameter expects a Date or moment object.
+Unless overridden by `visibleTimeStart` and `visibleTimeEnd`, specify where the calendar begins and where it ends. This parameter expects a Date or dayjs object.
 
 ## visibleTimeStart and visibleTimeEnd
 
@@ -240,7 +239,7 @@ Append a special `.rct-drag-right` handle to the elements and only resize if dra
 
 ### stackItems
 
-Stack items under each other, so there is no visual overlap when times collide.  Can be overridden in the `groups` array. Defaults to `false`. Requires millisecond or `Moment` timestamps, not native JavaScript `Date` objects.
+Stack items under each other, so there is no visual overlap when times collide.  Can be overridden in the `groups` array. Defaults to `false`. Requires millisecond or `Dayjs` timestamps, not native JavaScript `Date` objects.
 
 ## traditionalZoom
 
@@ -362,8 +361,8 @@ Here is an example that limits the timeline to only show dates starting 6 months
 
 ```js
 // this limits the timeline to -6 months ... +6 months
-const minTime = moment().add(-6, 'months').valueOf()
-const maxTime = moment().add(6, 'months').valueOf()
+const minTime = dayjs().add({months: -6}).valueOf()
+const maxTime = dayjs().add({months: 6}).valueOf()
 
 function (visibleTimeStart, visibleTimeEnd, updateScrollCanvas) {
   if (visibleTimeStart < minTime && visibleTimeEnd > maxTime) {
@@ -564,8 +563,8 @@ An example could look like (see: demo/vertical-classes):
 
 ```jsx
 verticalLineClassNamesForTime = (timeStart, timeEnd) => {
-  const currentTimeStart = moment(timeStart)
-  const currentTimeEnd = moment(timeEnd)
+  const currentTimeStart = dayjs(timeStart)
+  const currentTimeEnd = dayjs(timeEnd)
 
   for (let holiday of holidays) {
     if (
@@ -863,20 +862,20 @@ intervals are decided through the prop: `unit`. By default, the unit of the inte
 
 If `primaryHeader` is passed to unit, it will override the unit with a unit a unit larger by 1 of the timeline unit.
 
-If `unit` is set, the unit of the header will be the unit passed though the prop and can be any `unit of time` from `momentjs`.
+If `unit` is set, the unit of the header will be the unit passed though the prop and can be any `unit of time` from `dayjs`.
 
 #### Label format
 
 To format each interval label you can use 2 types of props to format which are:
 
-- `string`: if a string was passed it will be passed to `startTime` method `format` which is a `momentjs` object  .
+- `string`: if a string was passed it will be passed to `startTime` method `format` which is a `dayjs` object  .
 
 
 - `Function`: This is the more powerful method and offers the most control over what is rendered. The returned `string` will be rendered inside the interval
 
   ```typescript
     type Unit = `second` | `minute` | `hour` | `day` | `month` | `year`
-  ([startTime, endTime] : [Moment, Moment], unit: Unit, labelWidth: number, formatOptions: LabelFormat = defaultFormat ) => string
+  ([startTime, endTime] : [Dayjs, Dayjs], unit: Unit, labelWidth: number, formatOptions: LabelFormat = defaultFormat ) => string
   ```
 ##### Default format
 
@@ -1030,7 +1029,7 @@ Responsible for rendering the headers above calendar part of the timeline. This 
 
 #### unit
 
-The unit of the header will be the unit passed though the prop and can be any `unit of time` from `momentjs`. The default value for unit is `timelineUnit`
+The unit of the header will be the unit passed though the prop and can be any `unit of time` from `dayjs`. The default value for unit is `timelineUnit`
 
 #### Children
 
@@ -1083,7 +1082,7 @@ An object contains context for `timeline` and `header`:
 | `intervals`    | `array` | an array with all intervals|
 | `unit` | `string` | unit passed or timelineUnit |
 
-** `interval`: `[startTime: Moment, endTime: Moment]`
+** `interval`: `[startTime: Dayjs, endTime: Dayjs]`
 
 ##### Prop getters functions
 

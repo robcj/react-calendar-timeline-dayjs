@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 import Timeline from 'react-calendar-timeline'
 // import containerResizeDetector from 'react-calendar-timeline/lib/resize-detector/container'
 
 import generateFakeData from '../generate-fake-data'
 
-var minTime = moment()
-  .add(-6, 'months')
+var minTime = dayjs()
+  .add({months: -6})
   .valueOf()
-var maxTime = moment()
-  .add(6, 'months')
+var maxTime = dayjs()
+  .add({months: 6})
   .valueOf()
 
 var keys = {
@@ -30,12 +30,12 @@ export default class App extends Component {
     super(props)
 
     const { groups, items } = generateFakeData()
-    const defaultTimeStart = moment()
+    const defaultTimeStart = dayjs()
       .startOf('day')
       .toDate()
-    const defaultTimeEnd = moment()
+    const defaultTimeEnd = dayjs()
       .startOf('day')
-      .add(1, 'day')
+      .add({days: 1})
       .toDate()
 
     this.state = {
@@ -47,27 +47,27 @@ export default class App extends Component {
   }
 
   handleCanvasClick = (groupId, time, event) => {
-    console.log('Canvas clicked', groupId, moment(time).format())
+    console.log('Canvas clicked', groupId, dayjs(time).format())
   }
 
   handleCanvasContextMenu = (group, time, e) => {
-    console.log('Canvas context menu', group, moment(time).format())
+    console.log('Canvas context menu', group, dayjs(time).format())
   }
 
   handleItemClick = (itemId, _, time) => {
-    console.log('Clicked: ' + itemId, moment(time).format())
+    console.log('Clicked: ' + itemId, dayjs(time).format())
   }
 
   handleItemSelect = (itemId, _, time) => {
-    console.log('Selected: ' + itemId, moment(time).format())
+    console.log('Selected: ' + itemId, dayjs(time).format())
   }
 
   handleItemDoubleClick = (itemId, _, time) => {
-    console.log('Double Click: ' + itemId, moment(time).format())
+    console.log('Double Click: ' + itemId, dayjs(time).format())
   }
 
   handleItemContextMenu = (itemId, _, time) => {
-    console.log('Context Menu: ' + itemId, moment(time).format())
+    console.log('Context Menu: ' + itemId, dayjs(time).format())
   }
 
   handleItemMove = (itemId, dragTime, newGroupOrder) => {

@@ -7,7 +7,11 @@ and this project adheres (more or less) to [Semantic Versioning](http://semver.o
 
 ## Unreleased
 
+## 0.0.1
 
+ * Converted to use dayjs instead of moment.js
+
+# Original Fork Source of react-calendar-timeline
 ## 0.28.0
 
 * Add unit argument to onZoom and onTimeChange callbacks @hckr #655
@@ -214,21 +218,21 @@ const items = [
     group: 1,
     title: 'item 1',
     start_time: moment(),
-    end_time: moment().add(1, 'hour')
+    end_time: moment().add({hours: 1})
   },
   {
     id: 2,
     group: 2,
     title: 'item 2',
-    start_time: moment().add(-0.5, 'hour'),
-    end_time: moment().add(0.5, 'hour')
+    start_time: moment().add({hours: -0.5}),
+    end_time: moment().add({hours: 0.5})
   },
   {
     id: 3,
     group: 1,
     title: 'item 3',
-    start_time: moment().add(2, 'hour'),
-    end_time: moment().add(3, 'hour')
+    start_time: moment().add({hours: 2}),
+    end_time: moment().add({hours: 3})
   }
 ]
 
@@ -238,8 +242,8 @@ ReactDOM.render(
     <Timeline
       groups={groups}
       items={items}
-      defaultTimeStart={moment().add(-12, 'hour')}
-      defaultTimeEnd={moment().add(12, 'hour')}
+      defaultTimeStart={moment().add({hours: -12})}
+      defaultTimeEnd={moment().add({hours: 12})}
     />
   </div>,
   document.getElementById('root')

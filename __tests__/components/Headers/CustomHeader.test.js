@@ -10,7 +10,7 @@ import { getCustomHeadersInTimeline } from '../../test-utility/headerRenderers'
 import { parsePxToNumbers } from '../../test-utility/index'
 
 import 'jest-dom/extend-expect'
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 describe('CustomHeader Component Test', () => {
   afterEach(cleanup)
@@ -21,16 +21,16 @@ describe('CustomHeader Component Test', () => {
         unit: 'month',
         timelineState: {
           timelineUnit: 'month',
-          canvasTimeStart: moment.utc('1/6/2018', 'DD/MM/YYYY').valueOf(),
-          canvasTimeEnd: moment.utc('1/6/2020', 'DD/MM/YYYY').valueOf(),
-          visibleTimeStart: moment.utc('1/1/2019', 'DD/MM/YYYY').valueOf(),
-          visibleTimeEnd: moment.utc('1/1/2020', 'DD/MM/YYYY').valueOf()
+          canvasTimeStart: dayjs.utc('1/6/2018', 'DD/MM/YYYY').valueOf(),
+          canvasTimeEnd: dayjs.utc('1/6/2020', 'DD/MM/YYYY').valueOf(),
+          visibleTimeStart: dayjs.utc('1/1/2019', 'DD/MM/YYYY').valueOf(),
+          visibleTimeEnd: dayjs.utc('1/1/2020', 'DD/MM/YYYY').valueOf()
         }
       })
     )
     const intervals = getAllByTestId('customHeaderInterval')
-    const start = moment(intervals[0].textContent, 'DD/MM/YYYY')
-    const end = moment(intervals[1].textContent, 'DD/MM/YYYY')
+    const start = dayjs(intervals[0].textContent, 'DD/MM/YYYY')
+    const end = dayjs(intervals[1].textContent, 'DD/MM/YYYY')
     expect(end.diff(start, 'M')).toBe(1)
   })
   it('Given CustomHeader When pass a style props with (width, position) Then it should not override the default values', () => {
@@ -101,16 +101,16 @@ describe('CustomHeader Component Test', () => {
         timelineState: {
           //default unit we are testing
           timelineUnit: 'month',
-          canvasTimeStart: moment.utc('1/6/2018', 'DD/MM/YYYY').valueOf(),
-          canvasTimeEnd: moment.utc('1/6/2020', 'DD/MM/YYYY').valueOf(),
-          visibleTimeStart: moment.utc('1/1/2019', 'DD/MM/YYYY').valueOf(),
-          visibleTimeEnd: moment.utc('1/1/2020', 'DD/MM/YYYY').valueOf()
+          canvasTimeStart: dayjs.utc('1/6/2018', 'DD/MM/YYYY').valueOf(),
+          canvasTimeEnd: dayjs.utc('1/6/2020', 'DD/MM/YYYY').valueOf(),
+          visibleTimeStart: dayjs.utc('1/1/2019', 'DD/MM/YYYY').valueOf(),
+          visibleTimeEnd: dayjs.utc('1/1/2020', 'DD/MM/YYYY').valueOf()
         }
       })
     )
     const intervals = getAllByTestId('customHeaderInterval')
-    const start = moment(intervals[0].textContent, 'DD/MM/YYYY')
-    const end = moment(intervals[1].textContent, 'DD/MM/YYYY')
+    const start = dayjs(intervals[0].textContent, 'DD/MM/YYYY')
+    const end = dayjs(intervals[1].textContent, 'DD/MM/YYYY')
     expect(end.diff(start, 'M')).toBe(1)
   })
 
@@ -183,8 +183,8 @@ describe('CustomHeader Component Test', () => {
     expect(intervals).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          startTime: expect.any(moment),
-          endTime: expect.any(moment),
+          startTime: expect.any(dayjs),
+          endTime: expect.any(dayjs),
           labelWidth: expect.any(Number),
           left: expect.any(Number)
         })

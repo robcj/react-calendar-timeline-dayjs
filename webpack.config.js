@@ -5,7 +5,7 @@ const port = process.env.PORT || 4000
 const config = {
   context: path.join(__dirname, './demo'),
   entry: {
-    // vendor: ['react', 'react-dom', 'faker', 'interactjs', 'moment'],
+    // vendor: ['react', 'react-dom', 'faker', 'interactjs', 'dayjs'],
     demo: [
       `webpack-dev-server/client?http://0.0.0.0:${port}`,
       'webpack/hot/only-dev-server',
