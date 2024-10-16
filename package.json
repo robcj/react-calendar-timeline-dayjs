@@ -148,7 +148,7 @@
     "jsdom": "^25.0.1",
     "prettier": "^3.3.3",
     "prettier-eslint-cli": "^8.0.1",
-    "prop-types": "^15.6.2",
+    "prop-types": "^15.8.1",
     "randomcolor": "^0.5.3",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",

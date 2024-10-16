@@ -1,8 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { TimelineHeadersConsumer } from './HeadersContext'
-import { TimelineStateConsumer } from '../timeline/TimelineStateContext'
-import { iterateTimes, calculateXPositionForTime } from '../utility/calendar'
+import React from "react";
+import PropTypes from "prop-types";
+import { TimelineHeadersConsumer } from "./HeadersContext";
+import { TimelineStateConsumer } from "../timeline/TimelineStateContext";
+import { iterateTimes } from "../utility/calendar";
 
 export class CustomHeader extends React.Component {
   static propTypes = {
@@ -10,6 +10,7 @@ export class CustomHeader extends React.Component {
     children: PropTypes.func.isRequired,
     unit: PropTypes.string.isRequired,
     //Timeline context
+    timelineWidth: PropTypes.number.isRequired,
     timeSteps: PropTypes.object.isRequired,
     visibleTimeStart: PropTypes.number.isRequired,
     visibleTimeEnd: PropTypes.number.isRequired,
@@ -20,9 +21,9 @@ export class CustomHeader extends React.Component {
     headerData: PropTypes.object,
     getLeftOffsetFromDate: PropTypes.func.isRequired,
     height: PropTypes.number.isRequired,
-  }
+  };
   constructor(props) {
-    super(props)
+    super(props);
     const {
       canvasTimeStart,
       canvasTimeEnd,
@@ -31,7 +32,7 @@ export class CustomHeader extends React.Component {
       timeSteps,
       showPeriod,
       getLeftOffsetFromDate,
-    } = props
+    } = props;
 
     const intervals = this.getHeaderIntervals({
       canvasTimeStart,
@@ -41,11 +42,11 @@ export class CustomHeader extends React.Component {
       timeSteps,
       showPeriod,
       getLeftOffsetFromDate,
-    })
+    });
 
     this.state = {
       intervals,
-    }
+    };
   }
 
   shouldComponentUpdate(nextProps) {
@@ -59,9 +60,9 @@ export class CustomHeader extends React.Component {
       nextProps.children !== this.props.children ||
       nextProps.headerData !== this.props.headerData
     ) {
-      return true
+      return true;
     }
-    return false
+    return false;
   }
 
   componentDidUpdate(nextProps) {
@@ -81,7 +82,7 @@ export class CustomHeader extends React.Component {
         timeSteps,
         showPeriod,
         getLeftOffsetFromDate,
-      } = nextProps
+      } = nextProps;
 
       const intervals = this.getHeaderIntervals({
         canvasTimeStart,
@@ -91,9 +92,9 @@ export class CustomHeader extends React.Component {
         timeSteps,
         showPeriod,
         getLeftOffsetFromDate,
-      })
+      });
 
-      this.setState({ intervals })
+      this.setState({ intervals });
     }
   }
 
@@ -104,43 +105,43 @@ export class CustomHeader extends React.Component {
     timeSteps,
     getLeftOffsetFromDate,
   }) => {
-    const intervals = []
+    const intervals = [];
     iterateTimes(
       canvasTimeStart,
       canvasTimeEnd,
       unit,
       timeSteps,
       (startTime, endTime) => {
-        const left = getLeftOffsetFromDate(startTime.valueOf())
-        const right = getLeftOffsetFromDate(endTime.valueOf())
-        const width = right - left
+        const left = getLeftOffsetFromDate(startTime.valueOf());
+        const right = getLeftOffsetFromDate(endTime.valueOf());
+        const width = right - left;
         intervals.push({
           startTime,
           endTime,
           labelWidth: width,
           left,
-        })
-      },
-    )
-    return intervals
-  }
+        });
+      }
+    );
+    return intervals;
+  };
 
   getRootProps = (props = {}) => {
-    const { style } = props
+    const { style } = props;
     return {
       style: Object.assign({}, style ? style : {}, {
-        position: 'relative',
+        position: "relative",
         width: this.props.canvasWidth,
         height: this.props.height,
       }),
-    }
-  }
+    };
+  };
 
   getIntervalProps = (props = {}) => {
-    const { interval, style } = props
+    const { interval, style } = props;
     if (!interval)
-      throw new Error('you should provide interval to the prop getter')
-    const { startTime, labelWidth, left } = interval
+      throw new Error("you should provide interval to the prop getter");
+    const { startTime, labelWidth, left } = interval;
     return {
       style: this.getIntervalStyle({
         style,
@@ -151,17 +152,17 @@ export class CustomHeader extends React.Component {
         left,
       }),
       key: `label-${startTime.valueOf()}`,
-    }
-  }
+    };
+  };
 
   getIntervalStyle = ({ left, labelWidth, style }) => {
     return {
       ...style,
       left,
       width: labelWidth,
-      position: 'absolute',
-    }
-  }
+      position: "absolute",
+    };
+  };
 
   getStateAndHelpers = () => {
     const {
@@ -173,7 +174,7 @@ export class CustomHeader extends React.Component {
       visibleTimeStart,
       visibleTimeEnd,
       headerData,
-    } = this.props
+    } = this.props;
     //TODO: only evaluate on changing params
     return {
       timelineContext: {
@@ -191,49 +192,52 @@ export class CustomHeader extends React.Component {
       getIntervalProps: this.getIntervalProps,
       showPeriod,
       data: headerData,
-    }
-  }
+    };
+  };
 
   render() {
-    const props = this.getStateAndHelpers()
-    const Renderer = this.props.children
-    return <Renderer {...props} />
+    const props = this.getStateAndHelpers();
+    const Renderer = this.props.children;
+    return <Renderer {...props} />;
   }
 }
 
-const CustomHeaderWrapper = ({ children, unit, headerData, height }) => (
-  <TimelineStateConsumer>
-    {({ getTimelineState, showPeriod, getLeftOffsetFromDate }) => {
-      const timelineState = getTimelineState()
-      return (
-        <TimelineHeadersConsumer>
-          {({ timeSteps }) => (
-            <CustomHeader
-              children={children}
-              timeSteps={timeSteps}
-              showPeriod={showPeriod}
-              unit={unit ? unit : timelineState.timelineUnit}
-              {...timelineState}
-              headerData={headerData}
-              getLeftOffsetFromDate={getLeftOffsetFromDate}
-              height={height}
-            />
-          )}
-        </TimelineHeadersConsumer>
-      )
-    }}
-  </TimelineStateConsumer>
-)
+const CustomHeaderWrapper = ({ children, unit, headerData, height }) => {
+  return (
+    <TimelineStateConsumer>
+      {({ getTimelineState, showPeriod, getLeftOffsetFromDate }) => {
+        const timelineState = getTimelineState();
+        return (
+          <TimelineHeadersConsumer>
+            {({ timeSteps }) => (
+              <CustomHeader
+                timeSteps={timeSteps}
+                showPeriod={showPeriod}
+                unit={unit ? unit : timelineState.timelineUnit}
+                {...timelineState}
+                headerData={headerData}
+                getLeftOffsetFromDate={getLeftOffsetFromDate}
+                height={height}
+              >
+                {children}
+              </CustomHeader>
+            )}
+          </TimelineHeadersConsumer>
+        );
+      }}
+    </TimelineStateConsumer>
+  );
+};
 
 CustomHeaderWrapper.propTypes = {
   children: PropTypes.func.isRequired,
   unit: PropTypes.string,
   headerData: PropTypes.object,
   height: PropTypes.number,
-}
+};
 
 CustomHeaderWrapper.defaultProps = {
   height: 30,
-}
+};
 
-export default CustomHeaderWrapper
+export default CustomHeaderWrapper;
