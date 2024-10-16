@@ -30,7 +30,7 @@ export class CustomHeader extends React.Component {
       unit,
       timeSteps,
       showPeriod,
-      getLeftOffsetFromDate
+      getLeftOffsetFromDate,
     } = props
 
     const intervals = this.getHeaderIntervals({
@@ -40,11 +40,11 @@ export class CustomHeader extends React.Component {
       unit,
       timeSteps,
       showPeriod,
-      getLeftOffsetFromDate
+      getLeftOffsetFromDate,
     })
 
     this.state = {
-      intervals
+      intervals,
     }
   }
 
@@ -64,7 +64,7 @@ export class CustomHeader extends React.Component {
     return false
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(nextProps) {
     if (
       nextProps.canvasTimeStart !== this.props.canvasTimeStart ||
       nextProps.canvasTimeEnd !== this.props.canvasTimeEnd ||
@@ -80,7 +80,7 @@ export class CustomHeader extends React.Component {
         unit,
         timeSteps,
         showPeriod,
-        getLeftOffsetFromDate
+        getLeftOffsetFromDate,
       } = nextProps
 
       const intervals = this.getHeaderIntervals({
@@ -90,7 +90,7 @@ export class CustomHeader extends React.Component {
         unit,
         timeSteps,
         showPeriod,
-        getLeftOffsetFromDate
+        getLeftOffsetFromDate,
       })
 
       this.setState({ intervals })
@@ -102,7 +102,7 @@ export class CustomHeader extends React.Component {
     canvasTimeEnd,
     unit,
     timeSteps,
-    getLeftOffsetFromDate
+    getLeftOffsetFromDate,
   }) => {
     const intervals = []
     iterateTimes(
@@ -118,9 +118,9 @@ export class CustomHeader extends React.Component {
           startTime,
           endTime,
           labelWidth: width,
-          left
+          left,
         })
-      }
+      },
     )
     return intervals
   }
@@ -132,7 +132,7 @@ export class CustomHeader extends React.Component {
         position: 'relative',
         width: this.props.canvasWidth,
         height: this.props.height,
-      })
+      }),
     }
   }
 
@@ -148,9 +148,9 @@ export class CustomHeader extends React.Component {
         labelWidth,
         canvasTimeStart: this.props.canvasTimeStart,
         unit: this.props.unit,
-        left
+        left,
       }),
-      key: `label-${startTime.valueOf()}`
+      key: `label-${startTime.valueOf()}`,
     }
   }
 
@@ -159,7 +159,7 @@ export class CustomHeader extends React.Component {
       ...style,
       left,
       width: labelWidth,
-      position: 'absolute'
+      position: 'absolute',
     }
   }
 
@@ -181,11 +181,11 @@ export class CustomHeader extends React.Component {
         visibleTimeStart,
         visibleTimeEnd,
         canvasTimeStart,
-        canvasTimeEnd
+        canvasTimeEnd,
       },
       headerContext: {
         unit,
-        intervals: this.state.intervals
+        intervals: this.state.intervals,
       },
       getRootProps: this.getRootProps,
       getIntervalProps: this.getIntervalProps,
@@ -197,7 +197,7 @@ export class CustomHeader extends React.Component {
   render() {
     const props = this.getStateAndHelpers()
     const Renderer = this.props.children
-    return <Renderer {...props}/>
+    return <Renderer {...props} />
   }
 }
 

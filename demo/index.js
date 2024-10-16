@@ -3,10 +3,9 @@ import ReactDOM from 'react-dom'
 import 'react-calendar-timeline-css'
 import App from './app'
 
-const render = AppToRender => {
+const render = (AppToRender) => {
   ReactDOM.render(<AppToRender />, document.getElementById('root'))
 }
-
 render(App)
 
 if (module.hot) {

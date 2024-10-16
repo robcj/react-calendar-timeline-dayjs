@@ -1,6 +1,9 @@
+/**
+ * @jest-environment jsdom
+ */
 import React from 'react'
 import { render, fireEvent, cleanup } from 'react-testing-library'
-import 'jest-dom/extend-expect'
+import '@testing-library/jest-dom'
 import { RenderWrapper } from 'test-utility/marker-renderer'
 import TimelineMarkers from 'lib/markers/public/TimelineMarkers'
 import TodayMarker from 'lib/markers/public/TodayMarker'
@@ -15,7 +18,7 @@ describe('TodayMarker', () => {
         <TimelineMarkers>
           <TodayMarker />
         </TimelineMarkers>
-      </RenderWrapper>
+      </RenderWrapper>,
     )
 
     expect(getByTestId(defaultTestId)).toBeInTheDocument()
@@ -24,11 +27,11 @@ describe('TodayMarker', () => {
   it('is removed after initial render', () => {
     class RemoveTodayMarker extends React.Component {
       state = {
-        isShowing: true
+        isShowing: true,
       }
       handleToggleTodayMarker = () => {
         this.setState({
-          isShowing: false
+          isShowing: false,
         })
       }
       render() {
@@ -60,7 +63,7 @@ describe('TodayMarker', () => {
         <TimelineMarkers>
           <TodayMarker>{() => <div data-testid={dataTestId} />}</TodayMarker>
         </TimelineMarkers>
-      </RenderWrapper>
+      </RenderWrapper>,
     )
 
     expect(getByTestId(dataTestId)).toBeInTheDocument()
@@ -74,13 +77,13 @@ describe('TodayMarker', () => {
         <TimelineMarkers>
           <TodayMarker>{renderMock}</TodayMarker>
         </TimelineMarkers>
-      </RenderWrapper>
+      </RenderWrapper>,
     )
 
     // FIXME: test for date and styles as actual values
     expect(renderMock).toHaveBeenCalledWith({
       date: expect.any(Number),
-      styles: expect.any(Object)
+      styles: expect.any(Object),
     })
   })
 

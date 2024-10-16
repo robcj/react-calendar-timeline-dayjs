@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 import React from 'react'
 import TimelineMarkersRenderer from 'lib/markers/TimelineMarkersRenderer'
 import { TimelineMarkersProvider } from 'lib/markers/TimelineMarkersContext'
@@ -13,7 +16,7 @@ export const RenderHeadersWrapper = ({
   timelineState = {},
   headersState = {},
   showPeriod = () => {},
-  registerScroll = () => {}
+  registerScroll = () => {},
 }) => {
   const defaultTimelineState = {
     visibleTimeStart: state.visibleTimeStart,
@@ -23,12 +26,12 @@ export const RenderHeadersWrapper = ({
     canvasWidth: 2000,
     showPeriod: showPeriod,
     timelineUnit: 'day',
-    timelineWidth: 1000
+    timelineWidth: 1000,
   }
 
   const timelineStateProps = {
     ...defaultTimelineState,
-    ...timelineState
+    ...timelineState,
   }
 
   const headersStateProps = {
@@ -36,7 +39,7 @@ export const RenderHeadersWrapper = ({
     timeSteps: defaultTimeSteps,
     leftSidebarWidth: 150,
     rightSidebarWidth: 0,
-    ...headersState
+    ...headersState,
   }
 
   return (

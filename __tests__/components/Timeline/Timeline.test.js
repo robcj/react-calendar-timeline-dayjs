@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 import React from 'react'
 import dayjs from 'dayjs'
 import { mount } from 'enzyme'
@@ -7,7 +10,7 @@ import { noop } from 'test-utility'
 const defaultProps = {
   ...Timeline.defaultProps,
   items: [],
-  groups: []
+  groups: [],
 }
 
 xdescribe('Timeline', () => {
@@ -19,14 +22,14 @@ xdescribe('Timeline', () => {
       const props = {
         ...defaultProps,
         defaultTimeStart,
-        defaultTimeEnd
+        defaultTimeEnd,
       }
 
       const wrapper = mount(<Timeline {...props} />)
 
       expect(wrapper.state()).toMatchObject({
         visibleTimeStart: defaultTimeStart.valueOf(),
-        visibleTimeEnd: defaultTimeEnd.valueOf()
+        visibleTimeEnd: defaultTimeEnd.valueOf(),
       })
     })
     it('sets the visibleTime properties to visibleTime props', () => {
@@ -36,14 +39,14 @@ xdescribe('Timeline', () => {
       const props = {
         ...defaultProps,
         visibleTimeStart,
-        visibleTimeEnd
+        visibleTimeEnd,
       }
 
       const wrapper = mount(<Timeline {...props} />)
 
       expect(wrapper.state()).toMatchObject({
         visibleTimeStart,
-        visibleTimeEnd
+        visibleTimeEnd,
       })
     })
     it('throws error if neither visibleTime or defaultTime props are passed', () => {
@@ -52,11 +55,11 @@ xdescribe('Timeline', () => {
         visibleTimeStart: undefined,
         visibleTimeEnd: undefined,
         defaultTimeStart: undefined,
-        defaultTimeEnd: undefined
+        defaultTimeEnd: undefined,
       }
       jest.spyOn(global.console, 'error').mockImplementation(noop)
       expect(() => mount(<Timeline {...props} />)).toThrow(
-        'You must provide either "defaultTimeStart" and "defaultTimeEnd" or "visibleTimeStart" and "visibleTimeEnd" to initialize the Timeline'
+        'You must provide either "defaultTimeStart" and "defaultTimeEnd" or "visibleTimeStart" and "visibleTimeEnd" to initialize the Timeline',
       )
       jest.restoreAllMocks()
     })

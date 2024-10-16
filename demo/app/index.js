@@ -23,7 +23,7 @@ const demos = {
 // A simple component that shows the pathname of the current location
 class Menu extends Component {
   static propTypes = {
-    location: PropTypes.object.isRequired
+    location: PropTypes.object.isRequired,
   }
 
   render() {
@@ -40,7 +40,7 @@ class Menu extends Component {
         }`}
       >
         Choose the demo:
-        {Object.keys(demos).map(key => (
+        {Object.keys(demos).map((key) => (
           <Link
             key={key}
             className={pathname === `/${key}` ? 'selected' : ''}
@@ -64,7 +64,7 @@ class App extends Component {
           <MenuWithRouter />
           <div className="demo-demo">
             <Route path="/" exact component={demos[Object.keys(demos)[0]]} />
-            {Object.keys(demos).map(key => (
+            {Object.keys(demos).map((key) => (
               <Route key={key} path={`/${key}`} component={demos[key]} />
             ))}
           </div>

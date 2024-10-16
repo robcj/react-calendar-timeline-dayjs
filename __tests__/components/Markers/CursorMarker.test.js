@@ -1,6 +1,9 @@
+/**
+ * @jest-environment jsdom
+ */
 import React from 'react'
 import { render, fireEvent, cleanup } from 'react-testing-library'
-import 'jest-dom/extend-expect'
+import '@testing-library/jest-dom'
 import TimelineMarkers from 'lib/markers/public/TimelineMarkers'
 import CursorMarker from 'lib/markers/public/CursorMarker'
 import { RenderWrapper } from 'test-utility/marker-renderer'
@@ -28,11 +31,11 @@ describe('CursorMarker', () => {
             <CursorMarker />
           </TimelineMarkers>
         </RenderWrapper>
-      </MarkerCanvasProvider>
+      </MarkerCanvasProvider>,
     )
 
     subscribeToMouseOverMock.mock.calls[0][0]({
-      isCursorOverCanvas: true
+      isCursorOverCanvas: true,
     })
 
     expect(getByTestId(defaultCursorMarkerTestId)).toBeInTheDocument()
@@ -52,11 +55,11 @@ describe('CursorMarker', () => {
             </CursorMarker>
           </TimelineMarkers>
         </RenderWrapper>
-      </MarkerCanvasProvider>
+      </MarkerCanvasProvider>,
     )
 
     subscribeToMouseOverMock.mock.calls[0][0]({
-      isCursorOverCanvas: true
+      isCursorOverCanvas: true,
     })
 
     expect(getByTestId(customDataIdSelector)).toBeInTheDocument()
@@ -73,14 +76,14 @@ describe('CursorMarker', () => {
             <CursorMarker />
           </TimelineMarkers>
         </RenderWrapper>
-      </MarkerCanvasProvider>
+      </MarkerCanvasProvider>,
     )
 
     const leftOffset = 1000
 
     subscribeToMouseOverMock.mock.calls[0][0]({
       isCursorOverCanvas: true,
-      leftOffset
+      leftOffset,
     })
 
     const el = getByTestId(defaultCursorMarkerTestId)
@@ -100,19 +103,19 @@ describe('CursorMarker', () => {
             <CursorMarker>{rendererMock}</CursorMarker>
           </TimelineMarkers>
         </RenderWrapper>
-      </MarkerCanvasProvider>
+      </MarkerCanvasProvider>,
     )
 
     const now = Date.now()
 
     subscribeToMouseOverMock.mock.calls[0][0]({
       isCursorOverCanvas: true,
-      date: now
+      date: now,
     })
 
     expect(rendererMock).toHaveBeenCalledWith({
       styles: expect.any(Object),
-      date: now
+      date: now,
     })
   })
 
@@ -120,11 +123,11 @@ describe('CursorMarker', () => {
     const subscribeToMouseOverMock = jest.fn()
     class RemoveCursorMarker extends React.Component {
       state = {
-        isShowing: true
+        isShowing: true,
       }
       handleToggleCursorMarker = () => {
         this.setState({
-          isShowing: false
+          isShowing: false,
         })
       }
       render() {
@@ -148,7 +151,7 @@ describe('CursorMarker', () => {
     const { queryByTestId, getByText } = render(<RemoveCursorMarker />)
 
     subscribeToMouseOverMock.mock.calls[0][0]({
-      isCursorOverCanvas: true
+      isCursorOverCanvas: true,
     })
 
     expect(queryByTestId(defaultCursorMarkerTestId)).toBeInTheDocument()

@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 import React from 'react'
 import { mount } from 'enzyme'
 import { noop } from 'test-utility'
@@ -13,16 +16,16 @@ describe('PreventClickOnDrag', () => {
         clickTolerance={defaultClickTolerance}
       >
         <div />
-      </PreventClickOnDrag>
+      </PreventClickOnDrag>,
     )
 
     const originalClientX = 100
 
     wrapper.simulate('mousedown', {
-      clientX: originalClientX
+      clientX: originalClientX,
     })
     wrapper.simulate('mouseup', {
-      clientX: originalClientX + defaultClickTolerance + 1
+      clientX: originalClientX + defaultClickTolerance + 1,
     })
     wrapper.simulate('click')
 
@@ -37,15 +40,15 @@ describe('PreventClickOnDrag', () => {
         clickTolerance={defaultClickTolerance}
       >
         <div />
-      </PreventClickOnDrag>
+      </PreventClickOnDrag>,
     )
     const originalClientX = 100
 
     wrapper.simulate('mousedown', {
-      clientX: originalClientX
+      clientX: originalClientX,
     })
     wrapper.simulate('mouseup', {
-      clientX: originalClientX - defaultClickTolerance - 1
+      clientX: originalClientX - defaultClickTolerance - 1,
     })
     wrapper.simulate('click')
 
@@ -59,16 +62,16 @@ describe('PreventClickOnDrag', () => {
         clickTolerance={defaultClickTolerance}
       >
         <div />
-      </PreventClickOnDrag>
+      </PreventClickOnDrag>,
     )
     const originalClientX = 100
 
     wrapper.simulate('mousedown', {
-      clientX: originalClientX
+      clientX: originalClientX,
     })
 
     wrapper.simulate('mouseup', {
-      clientX: originalClientX + defaultClickTolerance - 1
+      clientX: originalClientX + defaultClickTolerance - 1,
     })
     wrapper.simulate('click')
 
@@ -83,16 +86,16 @@ describe('PreventClickOnDrag', () => {
         clickTolerance={defaultClickTolerance}
       >
         <div />
-      </PreventClickOnDrag>
+      </PreventClickOnDrag>,
     )
     const originalClientX = 100
 
     wrapper.simulate('mousedown', {
-      clientX: originalClientX
+      clientX: originalClientX,
     })
 
     wrapper.simulate('mouseup', {
-      clientX: originalClientX - defaultClickTolerance + 1
+      clientX: originalClientX - defaultClickTolerance + 1,
     })
     wrapper.simulate('click')
 
@@ -106,26 +109,26 @@ describe('PreventClickOnDrag', () => {
         clickTolerance={defaultClickTolerance}
       >
         <div />
-      </PreventClickOnDrag>
+      </PreventClickOnDrag>,
     )
 
     const originalClientX = 100
 
     wrapper.simulate('mousedown', {
-      clientX: originalClientX
+      clientX: originalClientX,
     })
     wrapper.simulate('mouseup', {
-      clientX: originalClientX + defaultClickTolerance + 1
+      clientX: originalClientX + defaultClickTolerance + 1,
     })
     wrapper.simulate('click')
 
     expect(onClickMock).not.toHaveBeenCalled()
 
     wrapper.simulate('mousedown', {
-      clientX: originalClientX
+      clientX: originalClientX,
     })
     wrapper.simulate('mouseup', {
-      clientX: originalClientX + defaultClickTolerance - 1 // less thanthreshold
+      clientX: originalClientX + defaultClickTolerance - 1, // less thanthreshold
     })
     wrapper.simulate('click')
 
@@ -139,7 +142,7 @@ describe('PreventClickOnDrag', () => {
         clickTolerance={defaultClickTolerance}
       >
         <div onDoubleClick={doubleClickMock} />
-      </PreventClickOnDrag>
+      </PreventClickOnDrag>,
     )
 
     wrapper.simulate('doubleclick', {})
@@ -159,10 +162,10 @@ describe('PreventClickOnDrag', () => {
           <div>hey</div>
           <div>hi</div>
           <div>how are ya </div>
-        </PreventClickOnDrag>
-      )
+        </PreventClickOnDrag>,
+      ),
     ).toThrowError(
-      'React.Children.only expected to receive a single React element child'
+      'React.Children.only expected to receive a single React element child',
     )
 
     jest.restoreAllMocks()
