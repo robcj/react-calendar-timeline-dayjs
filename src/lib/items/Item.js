@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import interact from 'interactjs';
 import dayjs from 'dayjs';
 
+import { TimelineContext } from '../Timeline';
 import { _get, deepObjectCompare } from '../utility/generic';
 import { composeEvents } from '../utility/events';
 import { defaultItemRenderer } from './defaultItemRenderer';
@@ -65,9 +66,9 @@ export default class Item extends Component {
     itemRenderer: defaultItemRenderer,
   };
 
-  static contextTypes = {
-    getTimelineContext: PropTypes.func,
-  };
+  // static contextTypes = {
+  //   getTimelineContext: PropTypes.func,
+  // };
 
   constructor(props) {
     super(props);
@@ -637,12 +638,17 @@ export default class Item extends Component {
     return finalStyle;
   }
 
+  static contextType = TimelineContext;
+
   render() {
     if (typeof this.props.order === 'undefined' || this.props.order === null) {
       return null;
     }
 
-    const timelineContext = this.context.getTimelineContext();
+    // const timelineContext = this.context;
+    const timelineContext = TimelineContext;
+    // const timelineContext = this.context.getTimelineContext();
+
     const itemContext = {
       dimensions: this.props.dimensions,
       useResizeHandle: this.props.useResizeHandle,
