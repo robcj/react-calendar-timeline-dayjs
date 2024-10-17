@@ -1,8 +1,8 @@
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
-import { iterateTimes } from '../utility/calendar'
-import { TimelineStateConsumer } from '../timeline/TimelineStateContext'
+import { iterateTimes } from '../utility/calendar';
+import { TimelineStateConsumer } from '../timeline/TimelineStateContext';
 
 const passThroughPropTypes = {
   canvasTimeStart: PropTypes.number.isRequired,
@@ -12,14 +12,14 @@ const passThroughPropTypes = {
   minUnit: PropTypes.string.isRequired,
   timeSteps: PropTypes.object.isRequired,
   height: PropTypes.number.isRequired,
-  verticalLineClassNamesForTime: PropTypes.func
-}
+  verticalLineClassNamesForTime: PropTypes.func,
+};
 
 class Columns extends Component {
   static propTypes = {
     ...passThroughPropTypes,
-    getLeftOffsetFromDate: PropTypes.func.isRequired
-  }
+    getLeftOffsetFromDate: PropTypes.func.isRequired,
+  };
 
   shouldComponentUpdate(nextProps) {
     return !(
@@ -32,7 +32,7 @@ class Columns extends Component {
       nextProps.height === this.props.height &&
       nextProps.verticalLineClassNamesForTime ===
         this.props.verticalLineClassNamesForTime
-    )
+    );
   }
 
   render() {
@@ -44,11 +44,11 @@ class Columns extends Component {
       timeSteps,
       height,
       verticalLineClassNamesForTime,
-      getLeftOffsetFromDate
-    } = this.props
-    const ratio = canvasWidth / (canvasTimeEnd - canvasTimeStart)
+      getLeftOffsetFromDate,
+    } = this.props;
+    const ratio = canvasWidth / (canvasTimeEnd - canvasTimeStart);
 
-    let lines = []
+    let lines = [];
 
     iterateTimes(
       canvasTimeStart,
@@ -56,15 +56,15 @@ class Columns extends Component {
       minUnit,
       timeSteps,
       (time, nextTime) => {
-        const minUnitValue = time.get(minUnit === 'day' ? 'date' : minUnit)
-        const firstOfType = minUnitValue === (minUnit === 'day' ? 1 : 0)
+        const minUnitValue = time.get(minUnit === 'day' ? 'date' : minUnit);
+        const firstOfType = minUnitValue === (minUnit === 'day' ? 1 : 0);
 
-        let classNamesForTime = []
+        let classNamesForTime = [];
         if (verticalLineClassNamesForTime) {
           classNamesForTime = verticalLineClassNamesForTime(
             time.unix() * 1000, // turn into ms, which is what verticalLineClassNamesForTime expects
             nextTime.unix() * 1000 - 1
-          )
+          );
         }
 
         // TODO: rename or remove class that has reference to vertical-line
@@ -74,10 +74,10 @@ class Columns extends Component {
           (minUnit === 'day' || minUnit === 'hour' || minUnit === 'minute'
             ? ` rct-day-${time.day()} `
             : ' ') +
-          classNamesForTime.join(' ')
+          classNamesForTime.join(' ');
 
-        const left = getLeftOffsetFromDate(time.valueOf())
-        const right = getLeftOffsetFromDate(nextTime.valueOf())
+        const left = getLeftOffsetFromDate(time.valueOf());
+        const right = getLeftOffsetFromDate(nextTime.valueOf());
         lines.push(
           <div
             key={`line-${time.valueOf()}`}
@@ -87,29 +87,29 @@ class Columns extends Component {
               top: '0px',
               left: `${left}px`,
               width: `${right - left}px`,
-              height: `${height}px`
+              height: `${height}px`,
             }}
           />
-        )
+        );
       }
-    )
+    );
 
-    return <div className="rct-vertical-lines">{lines}</div>
+    return <div className="rct-vertical-lines">{lines}</div>;
   }
 }
 
-const ColumnsWrapper = ({ ...props }) => {
+const ColumnsWrapper = (props) => {
   return (
     <TimelineStateConsumer>
       {({ getLeftOffsetFromDate }) => (
         <Columns getLeftOffsetFromDate={getLeftOffsetFromDate} {...props} />
       )}
     </TimelineStateConsumer>
-  )
-}
+  );
+};
 
-ColumnsWrapper.defaultProps = {
-  ...passThroughPropTypes
-}
+ColumnsWrapper.propTypes = {
+  ...passThroughPropTypes,
+};
 
-export default ColumnsWrapper
+export default ColumnsWrapper;

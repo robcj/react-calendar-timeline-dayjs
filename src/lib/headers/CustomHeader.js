@@ -1,8 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { TimelineHeadersConsumer } from "./HeadersContext";
-import { TimelineStateConsumer } from "../timeline/TimelineStateContext";
-import { iterateTimes } from "../utility/calendar";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { TimelineHeadersConsumer } from './HeadersContext';
+import { TimelineStateConsumer } from '../timeline/TimelineStateContext';
+import { iterateTimes } from '../utility/calendar';
 
 export class CustomHeader extends React.Component {
   static propTypes = {
@@ -130,7 +130,7 @@ export class CustomHeader extends React.Component {
     const { style } = props;
     return {
       style: Object.assign({}, style ? style : {}, {
-        position: "relative",
+        position: 'relative',
         width: this.props.canvasWidth,
         height: this.props.height,
       }),
@@ -140,7 +140,7 @@ export class CustomHeader extends React.Component {
   getIntervalProps = (props = {}) => {
     const { interval, style } = props;
     if (!interval)
-      throw new Error("you should provide interval to the prop getter");
+      throw new Error('you should provide interval to the prop getter');
     const { startTime, labelWidth, left } = interval;
     return {
       style: this.getIntervalStyle({
@@ -160,7 +160,7 @@ export class CustomHeader extends React.Component {
       ...style,
       left,
       width: labelWidth,
-      position: "absolute",
+      position: 'absolute',
     };
   };
 
@@ -202,7 +202,7 @@ export class CustomHeader extends React.Component {
   }
 }
 
-const CustomHeaderWrapper = ({ children, unit, headerData, height }) => {
+const CustomHeaderWrapper = ({ children, unit, headerData, height = 30 }) => {
   return (
     <TimelineStateConsumer>
       {({ getTimelineState, showPeriod, getLeftOffsetFromDate }) => {
@@ -234,10 +234,6 @@ CustomHeaderWrapper.propTypes = {
   unit: PropTypes.string,
   headerData: PropTypes.object,
   height: PropTypes.number,
-};
-
-CustomHeaderWrapper.defaultProps = {
-  height: 30,
 };
 
 export default CustomHeaderWrapper;
