@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "react calendar timeline (dayjs version)",
   "main": "lib/index.js",
+  "types": "types/index.d.ts",
   "scripts": {
     "build": "npm run build:lib",
     "build:demo": "echo '!!! Building Demo' && cross-env NODE_ENV=production webpack --progress",
@@ -16,7 +17,8 @@
   },
   "files": [
     "lib",
-    "src"
+    "src",
+    "types"
   ],
   "homepage": "https://github.com/robcj/react-calendar-timeline-dayjs",
   "repository": {
