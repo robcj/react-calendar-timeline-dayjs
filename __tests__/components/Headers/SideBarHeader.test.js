@@ -1,13 +1,16 @@
+/**
+ * @jest-environment jsdom
+ */
 import React from 'react'
 import { render, cleanup } from 'react-testing-library'
 import DateHeader from 'lib/headers/DateHeader'
 import SidebarHeader from 'lib/headers/SidebarHeader'
 import TimelineHeaders from 'lib/headers/TimelineHeaders'
-import 'jest-dom/extend-expect'
+import '@testing-library/jest-dom'
 import { RenderHeadersWrapper } from '../../test-utility/header-renderer'
 import {
   renderSidebarHeaderWithCustomValues,
-  renderTwoSidebarHeadersWithCustomValues
+  renderTwoSidebarHeadersWithCustomValues,
 } from '../../test-utility/headerRenderers'
 
 describe('Testing SidebarHeader Component', () => {
@@ -16,7 +19,7 @@ describe('Testing SidebarHeader Component', () => {
   //TODO: rename test
   it('Given sidebarHeader When pass style with overridden (width) Then it should not override the default values', () => {
     const { getByTestId, debug } = renderSidebarHeaderWithCustomValues({
-      props: { style: { width: 250 } }
+      props: { style: { width: 250 } },
     })
     const { width } = getComputedStyle(getByTestId('sidebarHeader'))
     expect(width).not.toBe('250px')
@@ -24,7 +27,7 @@ describe('Testing SidebarHeader Component', () => {
 
   it('Given sidebarHeader When pass style Then it show on the sidebar', () => {
     const { getByTestId } = renderSidebarHeaderWithCustomValues({
-      props: { style: { color: 'white' } }
+      props: { style: { color: 'white' } },
     })
     const { color } = getComputedStyle(getByTestId('sidebarHeader'))
     expect(color).toBe('white')
@@ -45,7 +48,7 @@ describe('Testing SidebarHeader Component', () => {
           <DateHeader primaryHeader />
           <DateHeader />
         </TimelineHeaders>
-      </RenderHeadersWrapper>
+      </RenderHeadersWrapper>,
     )
     expect(renderer).toHaveBeenCalled()
     expect(getByTestId('leftSidebarHeader')).toBeInTheDocument()
@@ -60,7 +63,7 @@ describe('Testing SidebarHeader Component', () => {
       )
     })
     const extraProps = {
-      someData: 'data'
+      someData: 'data',
     }
     const { getByTestId } = render(
       <RenderHeadersWrapper>
@@ -69,7 +72,7 @@ describe('Testing SidebarHeader Component', () => {
           <DateHeader primaryHeader />
           <DateHeader />
         </TimelineHeaders>
-      </RenderHeadersWrapper>
+      </RenderHeadersWrapper>,
     )
     expect(renderer).toHaveBeenCalled()
     expect(renderer.mock.calls[0][0].data).toBe(extraProps)
@@ -101,7 +104,7 @@ describe('Testing SidebarHeader Component', () => {
           <DateHeader primaryHeader />
           <DateHeader />
         </TimelineHeaders>
-      </RenderHeadersWrapper>
+      </RenderHeadersWrapper>,
     )
 
     expect(getByTestId('leftSidebarHeader')).toBeInTheDocument()
@@ -109,10 +112,10 @@ describe('Testing SidebarHeader Component', () => {
 
     expect(getByTestId('leftSidebarHeader').nextElementSibling).toHaveAttribute(
       'data-testid',
-      'headerContainer'
+      'headerContainer',
     )
     expect(
-      getByTestId('rightSidebarHeader').previousElementSibling
+      getByTestId('rightSidebarHeader').previousElementSibling,
     ).toHaveAttribute('data-testid', 'headerContainer')
   })
   it('Given SideBarHeader When passing a react stateless component as a child Then it should render', () => {
@@ -130,7 +133,7 @@ describe('Testing SidebarHeader Component', () => {
           <DateHeader primaryHeader />
           <DateHeader />
         </TimelineHeaders>
-      </RenderHeadersWrapper>
+      </RenderHeadersWrapper>,
     )
     expect(getByText('Left')).toBeInTheDocument()
   })
@@ -152,7 +155,7 @@ describe('Testing SidebarHeader Component', () => {
           <DateHeader primaryHeader />
           <DateHeader />
         </TimelineHeaders>
-      </RenderHeadersWrapper>
+      </RenderHeadersWrapper>,
     )
     expect(getByText('Left')).toBeInTheDocument()
   })

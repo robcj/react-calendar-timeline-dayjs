@@ -1,9 +1,8 @@
-# ⚠️⚠️⚠️⚠️ HELP WANTED
-please email me [ahmad.ilaiwi@gmail.com](mailto:ahmad.ilaiwi@gmail.com) and we will setup some time to speak and see if you can help maintain this library.
-
-# React Calendar Timeline
+# React Calendar Timeline (dayjs)
 
 A modern and responsive React timeline component.
+
+Forked from react-calendar-timeline to use dayjs instead of moment.js
 
 ![calendar demo](https://raw.githubusercontent.com/namespace-ee/react-calendar-timeline/master/demo.gif)
 
@@ -22,24 +21,24 @@ Checkout the [examples here](https://github.com/namespace-ee/react-calendar-time
 # Getting started
 
 ```bash
-# via yarn
-yarn add react-calendar-timeline
+# via yarn not available
+# yarn add react-calendar-timeline-dayjs
 
 # via npm
-npm install --save react-calendar-timeline
+npm install --save react-calendar-timeline-dayjs
 ```
 
-`react-calendar-timeline` has [react](https://reactjs.org/), [react-dom](https://reactjs.org/docs/react-dom.html), [`moment`](http://momentjs.com/) and [`interactjs`](http://interactjs.io/docs/) as peer dependencies.
+`react-calendar-timeline-dayjs` has [react](https://reactjs.org/), [react-dom](https://reactjs.org/docs/react-dom.html), [`dayjs`](http://day.js.org/) and [`interactjs`](http://interactjs.io/docs/) as peer dependencies.
 
 # Usage
 
 At the very minimum:
 
 ```jsx
-import Timeline from 'react-calendar-timeline'
+import Timeline from 'react-calendar-timeline-dayjs'
 // make sure you include the timeline stylesheet or the timeline will not be styled
-import 'react-calendar-timeline/lib/Timeline.css'
-import moment from 'moment'
+import 'react-calendar-timeline-dayjs/lib/Timeline.css'
+import dayjs from 'dayjs'
 
 const groups = [{ id: 1, title: 'group 1' }, { id: 2, title: 'group 2' }]
 
@@ -48,22 +47,22 @@ const items = [
     id: 1,
     group: 1,
     title: 'item 1',
-    start_time: moment(),
-    end_time: moment().add(1, 'hour')
+    start_time: dayjs(),
+    end_time: dayjs().add(1, 'hours')
   },
   {
     id: 2,
     group: 2,
     title: 'item 2',
-    start_time: moment().add(-0.5, 'hour'),
-    end_time: moment().add(0.5, 'hour')
+    start_time: dayjs().add(-0.5, 'hours'),
+    end_time: dayjs().add{hours: 0.5})
   },
   {
     id: 3,
     group: 1,
     title: 'item 3',
-    start_time: moment().add(2, 'hour'),
-    end_time: moment().add(3, 'hour')
+    start_time: dayjs().add(2, 'hours'),
+    end_time: dayjs().add(3, 'hours')
   }
 ]
 
@@ -73,8 +72,8 @@ ReactDOM.render(
     <Timeline
       groups={groups}
       items={items}
-      defaultTimeStart={moment().add(-12, 'hour')}
-      defaultTimeEnd={moment().add(12, 'hour')}
+      defaultTimeStart={dayjs().add(-12, 'hours')}
+      defaultTimeEnd={dayjs().add(12, 'hours')}
     />
   </div>,
   document.getElementById('root')
@@ -131,11 +130,11 @@ Expects either a vanilla JS array or an immutableJS array, consisting of objects
 }
 ```
 
-The preferred (fastest) option is to give Unix timestamps in milliseconds for `start_time` and `end_time`. Objects that convert to them (JavaScript `Date` or `moment()`) will also work, but will be a lot slower.
+The preferred (fastest) option is to give Unix timestamps in milliseconds for `start_time` and `end_time`. Objects that convert to them (JavaScript `Date` or `dayjs()`) will also work, but will be a lot slower.
 
 ## defaultTimeStart and defaultTimeEnd
 
-Unless overridden by `visibleTimeStart` and `visibleTimeEnd`, specify where the calendar begins and where it ends. This parameter expects a Date or moment object.
+Unless overridden by `visibleTimeStart` and `visibleTimeEnd`, specify where the calendar begins and where it ends. This parameter expects a Date or dayjs object.
 
 ## visibleTimeStart and visibleTimeEnd
 
@@ -213,7 +212,8 @@ What percentage of the height of the line is taken by the item? Default `0.65`
 
 Smallest time the calendar can zoom to in milliseconds. Default `60 * 60 * 1000` (1 hour)
 
-__notes__: please note than second won't show up unless you change this to `60 * 1000`
+**notes**: please note than second won't show up unless you change this to `60 * 1000`
+
 ## maxZoom
 
 Largest time the calendar can zoom to in milliseconds. Default `5 * 365.24 * 86400 * 1000` (5 years)
@@ -240,7 +240,7 @@ Append a special `.rct-drag-right` handle to the elements and only resize if dra
 
 ### stackItems
 
-Stack items under each other, so there is no visual overlap when times collide.  Can be overridden in the `groups` array. Defaults to `false`. Requires millisecond or `Moment` timestamps, not native JavaScript `Date` objects.
+Stack items under each other, so there is no visual overlap when times collide. Can be overridden in the `groups` array. Defaults to `false`. Requires millisecond or `Dayjs` timestamps, not native JavaScript `Date` objects.
 
 ## traditionalZoom
 
@@ -275,14 +275,13 @@ Ref callback that gets a DOM reference to the scroll body element. Can be useful
 
 Called when an item is moving or resizing. Returns an object with the following properties:
 
-| property           | type     | description                                                            |
-| ------------------ | -------- | ---------------------------------------------------------------------- |
-| `eventType`        | `string` | retuns either `move` or `resize`                                       |
-| `itemId`           | `number` | ID of the item being moved or resized                                  |
-| `time`             | `number` | UNIX timestamp in milliseconds                                         |
-| `edge`             | `string` | on `resize`, returns a value of either `left` or `right`               |
-| `newGroupOrder`    | `number` | on `move`, index position of the new group that the item is moving to  |
-
+| property        | type     | description                                                           |
+| --------------- | -------- | --------------------------------------------------------------------- |
+| `eventType`     | `string` | retuns either `move` or `resize`                                      |
+| `itemId`        | `number` | ID of the item being moved or resized                                 |
+| `time`          | `number` | UNIX timestamp in milliseconds                                        |
+| `edge`          | `string` | on `resize`, returns a value of either `left` or `right`              |
+| `newGroupOrder` | `number` | on `move`, index position of the new group that the item is moving to |
 
 ## onItemMove(itemId, dragTime, newGroupOrder)
 
@@ -353,7 +352,6 @@ function (action, item, time, resizeEdge) {
 }
 ```
 
-
 ## onTimeChange(visibleTimeStart, visibleTimeEnd, updateScrollCanvas, unit)
 
 A function that's called when the user tries to scroll. Call the passed `updateScrollCanvas(start, end)` with the updated visibleTimeStart and visibleTimeEnd (as unix timestamps in milliseconds) to change the scroll behavior, for example to limit scrolling.
@@ -362,8 +360,8 @@ Here is an example that limits the timeline to only show dates starting 6 months
 
 ```js
 // this limits the timeline to -6 months ... +6 months
-const minTime = moment().add(-6, 'months').valueOf()
-const maxTime = moment().add(6, 'months').valueOf()
+const minTime = dayjs().add(-6, 'months').valueOf()
+const maxTime = dayjs().add(6, 'months').valueOf()
 
 function (visibleTimeStart, visibleTimeEnd, updateScrollCanvas) {
   if (visibleTimeStart < minTime && visibleTimeEnd > maxTime) {
@@ -392,9 +390,9 @@ Parameters provided to the function has two types: context params which have the
 
 ##### context
 
-* `item` has the item we passed as a prop to the calendar.
+- `item` has the item we passed as a prop to the calendar.
 
-* `timelineContext`
+- `timelineContext`
 
 | property           | type     | description                                          |
 | ------------------ | -------- | ---------------------------------------------------- |
@@ -404,7 +402,7 @@ Parameters provided to the function has two types: context params which have the
 | `canvasTimeStart`  | `number` | denotes the start time in ms of the canvas timeline  |
 | `canvasTimeEnd`    | `number` | denotes the end time in ms of the canvas timeline    |
 
-* `itemContext`
+- `itemContext`
 
 | property          | type            | description                                                                                                                                                               |
 | ----------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -417,12 +415,12 @@ Parameters provided to the function has two types: context params which have the
 | `selected`        | `boolean`       | returns if the item is selected.                                                                                                                                          |
 | `dragging`        | `boolean`       | returns if the item is being dragged                                                                                                                                      |
 | `dragStart`       | `object`        | returns `x` and `y` of the start dragging point of the item.                                                                                                              |
-| `dragTime`       | `number`        |  current drag time.                                                                                                              |
+| `dragTime`        | `number`        | current drag time.                                                                                                                                                        |
 | `dragGroupDelta`  | `number`        | returns number of groups the item moved. if negative, moving was to top. If positive, moving was to down                                                                  |
 | `resizing`        | `boolean`       | returns if the item is being resized.                                                                                                                                     |
 | `resizeEdge`      | `left`, `right` | the side from which the component is being resized form                                                                                                                   |
 | `resizeStart`     | `number`        | returns the x value from where the component start moving                                                                                                                 |
-| `resizeTime`     | `number`        | current resize time                                                                                                                 |
+| `resizeTime`      | `number`        | current resize time                                                                                                                                                       |
 | `width`           | `boolean`       | returns the width of the item (same as in dimensions)                                                                                                                     |
 
 ##### prop getters functions
@@ -436,50 +434,49 @@ Rather than applying props on the element yourself and to avoid your props being
 | `getItemProps`   | `function(props={})` | returns the props you should apply to the root item element.                                                                              |
 | `getResizeProps` | `function(props={})` | returns two sets of props to apply on the `left` and `right` elements as resizing elements if you have `useResizeHandle` prop set to true |
 
-* `getItemProps` returns the props you should apply to the root item element. The returned props are:
+- `getItemProps` returns the props you should apply to the root item element. The returned props are:
 
-  * key: item id
-  * ref: function to get item reference
-  * className: classnames to be applied to the item
-  * onMouseDown: event handler
-  * onMouseUp: event handler
-  * onTouchStart: event handler
-  * onTouchEnd: event handler
-  * onDoubleClick: event handler
-  * onContextMenu: event handler
-  * style: inline object
-
+  - key: item id
+  - ref: function to get item reference
+  - className: classnames to be applied to the item
+  - onMouseDown: event handler
+  - onMouseUp: event handler
+  - onTouchStart: event handler
+  - onTouchEnd: event handler
+  - onDoubleClick: event handler
+  - onContextMenu: event handler
+  - style: inline object
 
   \*\* _the given styles will only override the styles that are not a requirement for positioning the item. Other styles like `color`, `radius` and others_
 
   These properties can be overriden using the prop argument with properties:
 
-  * className: class names to be added
-  * onMouseDown: event handler will be called after the component's event handler
-  * onMouseUp: event handler will be called after the component's event handler
-  * onTouchStart: event handler will be called after the component's event handler
-  * onTouchEnd: event handler will be called after the component's event handler
-  * onDoubleClick: event handler will be called after the component's event handler
-  * onContextMenu: event handler will be called after the component's event handler
-  * style: extra inline styles to be applied to the component
+  - className: class names to be added
+  - onMouseDown: event handler will be called after the component's event handler
+  - onMouseUp: event handler will be called after the component's event handler
+  - onTouchStart: event handler will be called after the component's event handler
+  - onTouchEnd: event handler will be called after the component's event handler
+  - onDoubleClick: event handler will be called after the component's event handler
+  - onContextMenu: event handler will be called after the component's event handler
+  - style: extra inline styles to be applied to the component
 
-* `getResizeProps` returns the props you should apply to the left and right resize handlers only if `useResizeHandle` set to true. The returned object has the props for the left element under property `left` and the props to be applied to the right element under `right` :
+- `getResizeProps` returns the props you should apply to the left and right resize handlers only if `useResizeHandle` set to true. The returned object has the props for the left element under property `left` and the props to be applied to the right element under `right` :
 
-  * left
-    * ref: function to get element reference
-    * style: style to be applied to the left element
-    * className: class names to be applied to left className
-  * right
-    * ref: function to get element reference
-    * style: style to be applied to the right element
-    * className: class names to be applied to left className
+  - left
+    - ref: function to get element reference
+    - style: style to be applied to the left element
+    - className: class names to be applied to left className
+  - right
+    - ref: function to get element reference
+    - style: style to be applied to the right element
+    - className: class names to be applied to left className
 
 These properties can be override using the prop argument with properties:
 
-* leftStyle: style to be added to left style
-* rightStyle: style to be added to right style
-* leftClassName: classes to be added to left handler
-* rightClassName: classes to be added to right handler
+- leftStyle: style to be added to left style
+- rightStyle: style to be added to right style
+- leftClassName: classes to be added to left handler
+- rightClassName: classes to be added to right handler
 
 example
 
@@ -531,10 +528,10 @@ sidebar. Will be passed the `group` and `isRightSidebar` as props.
 let groups = [
   {
     id: 1,
-    title: 'Title',
-    tip: 'additional information'
-  }
-]
+    title: "Title",
+    tip: "additional information",
+  },
+];
 
 groupRenderer = ({ group }) => {
   return (
@@ -542,8 +539,8 @@ groupRenderer = ({ group }) => {
       <span className="title">{group.title}</span>
       <p className="tip">{group.tip}</p>
     </div>
-  )
-}
+  );
+};
 ```
 
 ## resizeDetector
@@ -564,18 +561,18 @@ An example could look like (see: demo/vertical-classes):
 
 ```jsx
 verticalLineClassNamesForTime = (timeStart, timeEnd) => {
-  const currentTimeStart = moment(timeStart)
-  const currentTimeEnd = moment(timeEnd)
+  const currentTimeStart = dayjs(timeStart);
+  const currentTimeEnd = dayjs(timeEnd);
 
   for (let holiday of holidays) {
     if (
-      holiday.isSame(currentTimeStart, 'day') &&
-      holiday.isSame(currentTimeEnd, 'day')
+      holiday.isSame(currentTimeStart, "day") &&
+      holiday.isSame(currentTimeEnd, "day")
     ) {
-      return ['holiday']
+      return ["holiday"];
     }
   }
-}
+};
 ```
 
 Be aware that this function should be as optimized for performance as possible as it will be called on each render of the timeline (i.e. when the canvas is reset, when zooming, etc)
@@ -602,8 +599,8 @@ import Timeline, {
   TimelineMarkers,
   CustomMarker,
   TodayMarker,
-  CursorMarker
-} from 'react-calendar-timeline'
+  CursorMarker,
+} from "react-calendar-timeline";
 
 <Timeline>
   <TimelineMarkers>
@@ -614,15 +611,15 @@ import Timeline, {
       {({ styles, date }) => {
         const customStyles = {
           ...styles,
-          backgroundColor: 'deeppink',
-          width: '4px'
-        }
-        return <div style={customStyles} onClick={someCustomHandler} />
+          backgroundColor: "deeppink",
+          width: "4px",
+        };
+        return <div style={customStyles} onClick={someCustomHandler} />;
       }}
     </CustomMarker>
     <CursorMarker />
   </TimelineMarkers>
-</Timeline>
+</Timeline>;
 ```
 
 Each marker allows for passing in a custom renderer via a [function as a child component](https://medium.com/merrickchristensen/function-as-child-components-5f3920a9ace9). This allows the user to render whatever they want (event handlers, custom styling, etc). This custom renderer receives an object with two properties:
@@ -758,6 +755,7 @@ import Timeline, {
   </TimelineHeaders>
 <Timeline>
 ```
+
 ## Components
 
 Custom headers are implemented through a set of component with mostly [function as a child component](https://medium.com/merrickchristensen/function-as-child-components-5f3920a9ace9) pattern, designed to give the user the most control on how to render the headers.
@@ -768,13 +766,13 @@ Is the core component wrapper component for custom headers
 
 #### props
 
-| Prop          | type            | description                                                                                                                                                               |
-| ----------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `style`| `object`| applied to the root component of headers |
-| `className` | `string`| applied to the root component of the headers|
-| `calendarHeaderStyle`| `object`| applied to the root component of the calendar headers -scrolable div- `DateHeader` and `CustomHeader`)|
-| `calendarHeaderClassName`| `string`| applied to the root component of the calendar headers -scrolable div- `DateHeader` and `CustomHeader`)|
-| `headerRef` | `function` | used to get the ref of the header element
+| Prop                      | type       | description                                                                                            |
+| ------------------------- | ---------- | ------------------------------------------------------------------------------------------------------ |
+| `style`                   | `object`   | applied to the root component of headers                                                               |
+| `className`               | `string`   | applied to the root component of the headers                                                           |
+| `calendarHeaderStyle`     | `object`   | applied to the root component of the calendar headers -scrolable div- `DateHeader` and `CustomHeader`) |
+| `calendarHeaderClassName` | `string`   | applied to the root component of the calendar headers -scrolable div- `DateHeader` and `CustomHeader`) |
+| `headerRef`               | `function` | used to get the ref of the header element                                                              |
 
 ### `SidebarHeader`
 
@@ -782,11 +780,11 @@ Responsible for rendering the headers above the left and right sidebars.
 
 #### props
 
-| Prop          | type            | description                                                                                                                                                               |
-| ----------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `variant`| `left` (default), `right`| renders above the left or right sidebar |
-| `children` | `Function`| function as a child component to render the header|
-| `headerData` | `any`|  Contextual data to be passed to the item renderer as a data prop |
+| Prop         | type                      | description                                                      |
+| ------------ | ------------------------- | ---------------------------------------------------------------- |
+| `variant`    | `left` (default), `right` | renders above the left or right sidebar                          |
+| `children`   | `Function`                | function as a child component to render the header               |
+| `headerData` | `any`                     | Contextual data to be passed to the item renderer as a data prop |
 
 #### Child function renderer
 
@@ -796,18 +794,18 @@ a Function provides multiple parameters that can be used to render the sidebar h
 
 Rather than applying props on the element yourself and to avoid your props being overridden (or overriding the props returned). You can pass an object to the prop getters to avoid any problems. This object will only accept some properties that our component manage so the component make sure to combine them correctly.
 
-| property         | type                 | description|
-| ---------------- | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `getRootProps`   | `function(props={})` | returns the props you should apply to the root div element.|
-| `data`   | `any` | Contextual data passed by `headerData` prop|
+| property       | type                 | description                                                 |
+| -------------- | -------------------- | ----------------------------------------------------------- |
+| `getRootProps` | `function(props={})` | returns the props you should apply to the root div element. |
+| `data`         | `any`                | Contextual data passed by `headerData` prop                 |
 
-* `getRootProps` The returned props are:
+- `getRootProps` The returned props are:
 
-  * style: inline object style
+  - style: inline object style
 
   These properties can be override using the prop argument with properties:
 
-  * style: extra inline styles to be applied to the component
+  - style: extra inline styles to be applied to the component
 
 #### example
 
@@ -840,20 +838,19 @@ _Note_ : the Child function renderer can be a component or a function for conven
 
 ### `DateHeader`
 
-
 Responsible for rendering the headers above calendar part of the timeline. Consists of time intervals dividing the headers in columns.
 
 #### props
 
-| Prop          | type            | description|
-| ----------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `style`| `object`| applied to the root of the header |
-| `className` | `string`| applied to the root of the header|
-| `unit`| `second`, `minute`, `hour`, `day`, `week`, `month`, `year` or `primaryHeader` | intervals between columns |
-| `labelFormat` | `Function` or `string`| controls the how to format the interval label |
-| `intervalRenderer`| `Function`| render prop to render each interval in the header
-| `headerData` | `any`|  Contextual data to be passed to the item renderer as a data prop |
-| `height` | `number` default (30)|  height of the header in pixels |
+| Prop               | type                                                                          | description                                                      |
+| ------------------ | ----------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| `style`            | `object`                                                                      | applied to the root of the header                                |
+| `className`        | `string`                                                                      | applied to the root of the header                                |
+| `unit`             | `second`, `minute`, `hour`, `day`, `week`, `month`, `year` or `primaryHeader` | intervals between columns                                        |
+| `labelFormat`      | `Function` or `string`                                                        | controls the how to format the interval label                    |
+| `intervalRenderer` | `Function`                                                                    | render prop to render each interval in the header                |
+| `headerData`       | `any`                                                                         | Contextual data to be passed to the item renderer as a data prop |
+| `height`           | `number` default (30)                                                         | height of the header in pixels                                   |
 
 _Note_: passing `primaryHeader` to unit the header will act as the main header with interval unit larger than timeline unit by 1
 
@@ -863,82 +860,85 @@ intervals are decided through the prop: `unit`. By default, the unit of the inte
 
 If `primaryHeader` is passed to unit, it will override the unit with a unit a unit larger by 1 of the timeline unit.
 
-If `unit` is set, the unit of the header will be the unit passed though the prop and can be any `unit of time` from `momentjs`.
+If `unit` is set, the unit of the header will be the unit passed though the prop and can be any `unit of time` from `dayjs`.
 
 #### Label format
 
 To format each interval label you can use 2 types of props to format which are:
 
-- `string`: if a string was passed it will be passed to `startTime` method `format` which is a `momentjs` object  .
-
+- `string`: if a string was passed it will be passed to `startTime` method `format` which is a `dayjs` object .
 
 - `Function`: This is the more powerful method and offers the most control over what is rendered. The returned `string` will be rendered inside the interval
 
   ```typescript
-    type Unit = `second` | `minute` | `hour` | `day` | `month` | `year`
-  ([startTime, endTime] : [Moment, Moment], unit: Unit, labelWidth: number, formatOptions: LabelFormat = defaultFormat ) => string
+  type Unit = `second` | `minute` | `hour` | `day` | `month` | `year`;
+  (
+    [startTime, endTime]: [Dayjs, Dayjs],
+    unit: Unit,
+    labelWidth: number,
+    formatOptions: LabelFormat = defaultFormat
+  ) => string;
   ```
+
 ##### Default format
 
 by default we provide a responsive format for the dates based on the label width. it follows the following rules:
 
-  The `long`, `mediumLong`, `medium` and `short` will be be decided through the `labelWidth` value according to where it lays upon the following scale:
+The `long`, `mediumLong`, `medium` and `short` will be be decided through the `labelWidth` value according to where it lays upon the following scale:
 
-  ```
-  |-----`short`-----50px-----`medium`-----100px-----`mediumLong`-----150px--------`long`-----
-  ```
+```
+|-----`short`-----50px-----`medium`-----100px-----`mediumLong`-----150px--------`long`-----
+```
 
-
-  ```typescript
-  // default format object
-  const format : LabelFormat = {
+```typescript
+// default format object
+const format: LabelFormat = {
   year: {
-    long: 'YYYY',
-    mediumLong: 'YYYY',
-    medium: 'YYYY',
-    short: 'YY'
+    long: "YYYY",
+    mediumLong: "YYYY",
+    medium: "YYYY",
+    short: "YY",
   },
   month: {
-    long: 'MMMM YYYY',
-    mediumLong: 'MMMM',
-    medium: 'MMMM',
-    short: 'MM/YY'
+    long: "MMMM YYYY",
+    mediumLong: "MMMM",
+    medium: "MMMM",
+    short: "MM/YY",
   },
   week: {
-    long: 'w',
-    mediumLong: 'w',
-    medium: 'w',
-    short: 'w'
+    long: "w",
+    mediumLong: "w",
+    medium: "w",
+    short: "w",
   },
   day: {
-    long: 'dddd, LL',
-    mediumLong: 'dddd, LL',
-    medium: 'dd D',
-    short: 'D'
+    long: "dddd, LL",
+    mediumLong: "dddd, LL",
+    medium: "dd D",
+    short: "D",
   },
   hour: {
-    long: 'dddd, LL, HH:00',
-    mediumLong: 'L, HH:00',
-    medium: 'HH:00',
-    short: 'HH'
+    long: "dddd, LL, HH:00",
+    mediumLong: "L, HH:00",
+    medium: "HH:00",
+    short: "HH",
   },
   minute: {
-    long: 'HH:mm',
-    mediumLong: 'HH:mm',
-    medium: 'HH:mm',
-    short: 'mm',
+    long: "HH:mm",
+    mediumLong: "HH:mm",
+    medium: "HH:mm",
+    short: "mm",
   },
   second: {
-    "long": 'mm:ss',
-    mediumLong: 'mm:ss',
-    medium: 'mm:ss',
-    "short": 'ss'
-  }  
-}
-  ```
+    long: "mm:ss",
+    mediumLong: "mm:ss",
+    medium: "mm:ss",
+    short: "ss",
+  },
+};
+```
 
 _Note_: this is only an implementation of the function param. You can do this on your own easily
-
 
 #### intervalRenderer
 
@@ -952,30 +952,29 @@ _Note_ : the renderProp can be a component or a function for convenience
 
 An object contains the following properties:
 
-| property           | type     | description                                          |
-| ------------------ | -------- | ---------------------------------------------------- |
-| `interval`    | `object : {startTime, endTime, labelWidth, left}` | an object containing data related to the interval|
-| `intervalText` | `string` | the string returned from `labelFormat` prop |
-
+| property       | type                                              | description                                       |
+| -------------- | ------------------------------------------------- | ------------------------------------------------- |
+| `interval`     | `object : {startTime, endTime, labelWidth, left}` | an object containing data related to the interval |
+| `intervalText` | `string`                                          | the string returned from `labelFormat` prop       |
 
 ##### Prop getters functions
 
 Rather than applying props on the element yourself and to avoid your props being overridden (or overriding the props returned). You can pass an object to the prop getters to avoid any problems. This object will only accept some properties that our component manage so the component make sure to combine them correctly.
 
-| property         | type                 | description|
-| ---------------- | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `getIntervalProps`   | `function(props={})` | returns the props you should apply to the root div element.|
+| property           | type                 | description                                                 |
+| ------------------ | -------------------- | ----------------------------------------------------------- |
+| `getIntervalProps` | `function(props={})` | returns the props you should apply to the root div element. |
 
-* `getIntervalProps` The returned props are:
+- `getIntervalProps` The returned props are:
 
-  * style: inline object style
-  * onClick: event handler
-  * key
+  - style: inline object style
+  - onClick: event handler
+  - key
 
   These properties can be extended using the prop argument with properties:
 
-  * style: extra inline styles to be applied to the component
-  * onClick: extra click handler added to the normal `showPeriod callback`
+  - style: extra inline styles to be applied to the component
+  - onClick: extra click handler added to the normal `showPeriod callback`
 
 ##### data
 
@@ -987,14 +986,14 @@ data passed through headerData
 import Timeline, {
   TimelineHeaders,
   SidebarHeader,
-  DateHeader
-} from 'react-calendar-timeline'
+  DateHeader,
+} from "react-calendar-timeline";
 
 <Timeline>
   <TimelineHeaders>
     <SidebarHeader>
       {({ getRootProps }) => {
-        return <div {...getRootProps()}>Left</div>
+        return <div {...getRootProps()}>Left</div>;
       }}
     </SidebarHeader>
     <DateHeader unit="primaryHeader" />
@@ -1003,16 +1002,18 @@ import Timeline, {
       unit="day"
       labelFormat="MM/DD"
       style={{ height: 50 }}
-      data={{someData: 'example'}}
+      data={{ someData: "example" }}
       intervalRenderer={({ getIntervalProps, intervalContext, data }) => {
-        return <div {...getIntervalProps()}>
-          {intervalContext.intervalText}
-          {data.example}
-        </div>
+        return (
+          <div {...getIntervalProps()}>
+            {intervalContext.intervalText}
+            {data.example}
+          </div>
+        );
       }}
     />
   </TimelineHeaders>
-</Timeline>
+</Timeline>;
 ```
 
 ### `CustomHeader`
@@ -1021,16 +1022,16 @@ Responsible for rendering the headers above calendar part of the timeline. This 
 
 #### props
 
-| Prop          | type            | description|
-| ----------------- | --------------- | ---|
-| `unit`| `second`, `minute`, `hour`, `day`, `week`, `month`, `year` (default `timelineUnit`) | intervals |
-| `children` | `Function`| function as a child component to render the header|
-| `headerData` | `any`|  Contextual data to be passed to the item renderer as a data prop |
-| `height` | `number` default (30)|  height of the header in pixels |
+| Prop         | type                                                                                | description                                                      |
+| ------------ | ----------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| `unit`       | `second`, `minute`, `hour`, `day`, `week`, `month`, `year` (default `timelineUnit`) | intervals                                                        |
+| `children`   | `Function`                                                                          | function as a child component to render the header               |
+| `headerData` | `any`                                                                               | Contextual data to be passed to the item renderer as a data prop |
+| `height`     | `number` default (30)                                                               | height of the header in pixels                                   |
 
 #### unit
 
-The unit of the header will be the unit passed though the prop and can be any `unit of time` from `momentjs`. The default value for unit is `timelineUnit`
+The unit of the header will be the unit passed though the prop and can be any `unit of time` from `dayjs`. The default value for unit is `timelineUnit`
 
 #### Children
 
@@ -1065,51 +1066,50 @@ _Note_ : the Child function renderer can be a component or a function for conven
 
 An object contains context for `timeline` and `header`:
 
-
 ###### Timeline context
 
-| property           | type     | description                                          |
-| ------------------ | -------- | ---------------------------------------------------- |
-| `timelineWidth`    | `number` | width of timeline|
+| property           | type     | description                             |
+| ------------------ | -------- | --------------------------------------- |
+| `timelineWidth`    | `number` | width of timeline                       |
 | `visibleTimeStart` | `number` | unix milliseconds of start visible time |
-| `visibleTimeEnd`    | `number` | unix milliseconds of end visible time|
-| `canvasTimeStart` | `number` | unix milliseconds of start buffer time |
-| `canvasTimeEnd`    | `number` |unix milliseconds of end buffer time|
+| `visibleTimeEnd`   | `number` | unix milliseconds of end visible time   |
+| `canvasTimeStart`  | `number` | unix milliseconds of start buffer time  |
+| `canvasTimeEnd`    | `number` | unix milliseconds of end buffer time    |
 
 ###### Header context
 
-| property           | type     | description                                          |
-| ------------------ | -------- | ---------------------------------------------------- |
-| `intervals`    | `array` | an array with all intervals|
-| `unit` | `string` | unit passed or timelineUnit |
+| property    | type     | description                 |
+| ----------- | -------- | --------------------------- |
+| `intervals` | `array`  | an array with all intervals |
+| `unit`      | `string` | unit passed or timelineUnit |
 
-** `interval`: `[startTime: Moment, endTime: Moment]`
+\*\* `interval`: `[startTime: Dayjs, endTime: Dayjs]`
 
 ##### Prop getters functions
 
 Rather than applying props on the element yourself and to avoid your props being overridden (or overriding the props returned). You can pass an object to the prop getters to avoid any problems. This object will only accept some properties that our component manage so the component make sure to combine them correctly.
 
-| property         | type                 | description|
-| ---------------- | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `getRootProps`   | `function(props={})` | returns the props you should apply to the root div element.|
-| `getIntervalProps`   | `function(props={})` | returns the props you should apply to the interval div element.|
+| property           | type                 | description                                                     |
+| ------------------ | -------------------- | --------------------------------------------------------------- |
+| `getRootProps`     | `function(props={})` | returns the props you should apply to the root div element.     |
+| `getIntervalProps` | `function(props={})` | returns the props you should apply to the interval div element. |
 
-* `getIntervalProps` The returned props are:
+- `getIntervalProps` The returned props are:
 
-  * style: inline object style
-  * onClick: event handler
-  * key
+  - style: inline object style
+  - onClick: event handler
+  - key
 
   These properties can be extended using the prop argument with properties:
 
-  * style: extra inline styles to be applied to the component
-  * onClick: extra click handler added to the normal `showPeriod callback`
+  - style: extra inline styles to be applied to the component
+  - onClick: extra click handler added to the normal `showPeriod callback`
 
 ##### helpers:
 
-| property         | type                 | description|
-| ---------------- | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `showPeriod`   | `function(props={})` | returns the props you should apply to the root div element.|
+| property     | type                 | description                                                 |
+| ------------ | -------------------- | ----------------------------------------------------------- |
+| `showPeriod` | `function(props={})` | returns the props you should apply to the root div element. |
 
 ##### data:
 
@@ -1121,19 +1121,19 @@ pass through the `headerData` prop content
 import Timeline, {
   TimelineHeaders,
   SidebarHeader,
-  DateHeader
-} from 'react-calendar-timeline'
+  DateHeader,
+} from "react-calendar-timeline";
 
 <Timeline>
   <TimelineHeaders>
     <SidebarHeader>
       {({ getRootProps }) => {
-        return <div {...getRootProps()}>Left</div>
+        return <div {...getRootProps()}>Left</div>;
       }}
     </SidebarHeader>
     <DateHeader unit="primaryHeader" />
     <DateHeader />
-    <CustomHeader height={50} headerData={{someData: 'data'}} unit="year">
+    <CustomHeader height={50} headerData={{ someData: "data" }} unit="year">
       {({
         headerContext: { intervals },
         getRootProps,
@@ -1143,37 +1143,37 @@ import Timeline, {
       }) => {
         return (
           <div {...getRootProps()}>
-            {intervals.map(interval => {
+            {intervals.map((interval) => {
               const intervalStyle = {
-                lineHeight: '30px',
-                textAlign: 'center',
-                borderLeft: '1px solid black',
-                cursor: 'pointer',
-                backgroundColor: 'Turquoise',
-                color: 'white'
-              }
+                lineHeight: "30px",
+                textAlign: "center",
+                borderLeft: "1px solid black",
+                cursor: "pointer",
+                backgroundColor: "Turquoise",
+                color: "white",
+              };
               return (
                 <div
                   onClick={() => {
-                    showPeriod(interval.startTime, interval.endTime)
+                    showPeriod(interval.startTime, interval.endTime);
                   }}
                   {...getIntervalProps({
                     interval,
-                    style: intervalStyle
+                    style: intervalStyle,
                   })}
                 >
                   <div className="sticky">
-                    {interval.startTime.format('YYYY')}
+                    {interval.startTime.format("YYYY")}
                   </div>
                 </div>
-              )
+              );
             })}
           </div>
-        )
+        );
       }}
     </CustomHeader>
   </TimelineHeaders>
-</Timeline>
+</Timeline>;
 ```
 
 # FAQ
@@ -1226,7 +1226,7 @@ Alternatively you may import the transpiled version of the timeline like this:
 
 ```js
 // import Timeline from 'react-calendar-timeline'  // ESnext version
-import Timeline from 'react-calendar-timeline/lib' // ES5 version
+import Timeline from "react-calendar-timeline/lib"; // ES5 version
 ```
 
 However doing so you lose on some of the features of webpack 2 and will potentially get a slightly larger bundle.
@@ -1239,10 +1239,10 @@ It's the same issue as above. See [issue 134](https://github.com/namespace-ee/re
 
 This is useful when using the plugins (that you pass as children to the component). Override the CSS to change:
 
-* Horizontal Lines: 30
-* Vertical Lines: 40
-* Items: 80-88 (depending on selection, dragging, etc)
-* Header: 90
+- Horizontal Lines: 30
+- Vertical Lines: 40
+- Items: 80-88 (depending on selection, dragging, etc)
+- Header: 90
 
 ## Behind the scenes
 
@@ -1296,4 +1296,5 @@ npm version patch
 -->
 
 ## License
+
 [MIT licensed](/LICENSE.md).

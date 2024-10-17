@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 import React from 'react'
 import TimelineMarkersRenderer from 'lib/markers/TimelineMarkersRenderer'
 import { TimelineMarkersProvider } from 'lib/markers/TimelineMarkersContext'
@@ -16,9 +19,9 @@ export const RenderWrapper = ({ children, timelineState }) => {
     canvasTimeEnd: visibleTimeEnd + oneDay,
     canvasWidth: 3000,
     visibleWidth: 1000,
-    showPeriod:()=>{},
-    timelineWidth:1000,
-    timelineUnit:'day'
+    showPeriod: () => {},
+    timelineWidth: 1000,
+    timelineUnit: 'day',
   }
 
   timelineState = timelineState != null ? timelineState : defaultTimelineState
