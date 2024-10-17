@@ -1,10 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
-import createReactContext from "create-react-context";
+import React from 'react';
+import PropTypes from 'prop-types';
+
 import {
   calculateXPositionForTime,
   calculateTimeForXPosition,
-} from "../utility/calendar";
+} from '../utility/calendar';
 
 /* this context will hold all information regarding timeline state:
   1. timeline width
@@ -28,7 +28,7 @@ const defaultContextState = {
   },
 };
 
-const { Consumer, Provider } = createReactContext(defaultContextState);
+const { Consumer, Provider } = React.createContext(defaultContextState);
 
 export class TimelineStateProvider extends React.Component {
   static propTypes = {

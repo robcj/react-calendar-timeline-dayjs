@@ -68,7 +68,7 @@ const items = [
   }
 ]
 
-ReactDOM.render(
+ReactDOM.createRoot(document.getElementById('root')).render(
   <div>
     Rendered by react!
     <Timeline
@@ -77,8 +77,7 @@ ReactDOM.render(
       defaultTimeStart={dayjs().add(-12, 'hours')}
       defaultTimeEnd={dayjs().add(12, 'hours')}
     />
-  </div>,
-  document.getElementById('root')
+  </div>
 )
 ```
 
