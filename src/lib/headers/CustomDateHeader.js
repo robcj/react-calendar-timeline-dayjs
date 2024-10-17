@@ -1,5 +1,5 @@
-import React from 'react'
-import Interval from './Interval'
+import React from "react";
+import Interval from "./Interval";
 export function CustomDateHeader({
   headerContext: { intervals, unit },
   getRootProps,
@@ -11,8 +11,8 @@ export function CustomDateHeader({
     className,
     getLabelFormat,
     unitProp,
-    headerData
-  }
+    headerData,
+  },
 }) {
   return (
     <div
@@ -20,12 +20,12 @@ export function CustomDateHeader({
       className={className}
       {...getRootProps({ style })}
     >
-      {intervals.map(interval => {
+      {intervals.map((interval) => {
         const intervalText = getLabelFormat(
           [interval.startTime, interval.endTime],
           unit,
           interval.labelWidth
-        )
+        );
         return (
           <Interval
             key={`label-${interval.startTime.valueOf()}`}
@@ -33,13 +33,13 @@ export function CustomDateHeader({
             interval={interval}
             showPeriod={showPeriod}
             intervalText={intervalText}
-            primaryHeader={unitProp === 'primaryHeader'}
+            primaryHeader={unitProp === "primaryHeader"}
             getIntervalProps={getIntervalProps}
             intervalRenderer={intervalRenderer}
             headerData={headerData}
           />
-        )
+        );
       })}
     </div>
-  )
+  );
 }
