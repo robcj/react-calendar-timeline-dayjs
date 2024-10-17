@@ -55,7 +55,7 @@ export default class App extends Component {
   }
 
   getMinutesOfDay = (date) => {
-    return date.hour() * 60 + date.minutes();
+    return date.hour() * 60 + date.minute();
   };
 
   verticalLineClassNamesForTime = (timeStart, timeEnd) => {
