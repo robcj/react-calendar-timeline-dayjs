@@ -1,19 +1,19 @@
-import 'regenerator-runtime/runtime'
-import { TextEncoder, TextDecoder } from 'util'
+import 'regenerator-runtime/runtime';
+import { TextEncoder, TextDecoder } from 'util';
 
-Object.assign(global, { TextDecoder, TextEncoder })
+Object.assign(global, { TextDecoder, TextEncoder });
 
-const Enzyme = require('enzyme')
-const Adapter = require('enzyme-adapter-react-16')
+const Enzyme = require('enzyme');
+const Adapter = require('@cfaester/enzyme-adapter-react-18');
 
-Enzyme.configure({ adapter: new Adapter() })
+Enzyme.configure({ adapter: new Adapter() });
 
 global.console.error = (message) => {
   // mostly related to proptypes errors
   // fail test if app code uses console.error
-  throw new Error(message)
-}
+  throw new Error(message);
+};
 
 global.console.warn = (message) => {
-  throw new Error(message)
-}
+  throw new Error(message);
+};
