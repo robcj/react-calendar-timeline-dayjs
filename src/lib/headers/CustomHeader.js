@@ -196,7 +196,7 @@ export class CustomHeader extends React.Component {
   }
 }
 
-const CustomHeaderWrapper = ({ children, unit, headerData, height }) => {
+const CustomHeaderWrapper = ({ children, unit, headerData, height = 30 }) => {
   return (
     <TimelineStateConsumer>
       {({ getTimelineState, showPeriod, getLeftOffsetFromDate }) => {
@@ -228,10 +228,6 @@ CustomHeaderWrapper.propTypes = {
   unit: PropTypes.string,
   headerData: PropTypes.object,
   height: PropTypes.number,
-};
-
-CustomHeaderWrapper.defaultProps = {
-  height: 30,
 };
 
 export default CustomHeaderWrapper;
