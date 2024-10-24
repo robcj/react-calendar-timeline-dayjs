@@ -59,6 +59,9 @@ export function iterateTimes(start, end, unit, timeSteps, callback) {
   while (time.valueOf() < end) {
     const addUnit = unit === 'isoWeek' ? 'week' : unit;
     let nextTime = dayjs(time).add(timeSteps[unit] || 1, addUnit);
+    if (unit === 'isoWeek' || unit === 'week') {
+      nextTime = nextTime.endOf('day');
+    }
     callback(time, nextTime);
     time = nextTime;
   }
