@@ -1,8 +1,11 @@
 import dayjs from 'dayjs';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
 import isoWeek from 'dayjs/plugin/isoWeek';
 import { _get } from './generic';
 
 dayjs.extend(isoWeek);
+// Enable localised format to allow use of LL and L in format strings (in defaultHeaderFormats)
+dayjs.extend(localizedFormat);
 
 /**
  * Calculate the ms / pixel ratio of the timeline state
@@ -59,9 +62,9 @@ export function iterateTimes(start, end, unit, timeSteps, callback) {
   while (time.valueOf() < end) {
     const addUnit = unit === 'isoWeek' ? 'week' : unit;
     let nextTime = dayjs(time).add(timeSteps[unit] || 1, addUnit);
-    if (unit === 'isoWeek' || unit === 'week') {
-      nextTime = nextTime.endOf('day');
-    }
+    // if (unit === 'isoWeek' || unit === 'week') {
+    //   nextTime = nextTime.endOf('day');
+    // }
     callback(time, nextTime);
     time = nextTime;
   }
