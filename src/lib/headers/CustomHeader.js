@@ -1,8 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { TimelineHeadersConsumer } from "./HeadersContext";
-import { TimelineStateConsumer } from "../timeline/TimelineStateContext";
-import { iterateTimes } from "../utility/calendar";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { TimelineHeadersConsumer } from './HeadersContext';
+import { TimelineStateConsumer } from '../timeline/TimelineStateContext';
+import { iterateTimes } from '../utility/calendar';
 
 export class CustomHeader extends React.Component {
   static propTypes = {
@@ -34,7 +34,7 @@ export class CustomHeader extends React.Component {
       getLeftOffsetFromDate,
     } = props;
 
-    const intervals = this.getHeaderIntervals({
+    const intervals = CustomHeader.getHeaderIntervals({
       canvasTimeStart,
       canvasTimeEnd,
       canvasWidth,
@@ -65,14 +65,14 @@ export class CustomHeader extends React.Component {
     return false;
   }
 
-  componentDidUpdate(nextProps) {
+  static getDerivedStateFromProps(nextProps, prevState) {
     if (
-      nextProps.canvasTimeStart !== this.props.canvasTimeStart ||
-      nextProps.canvasTimeEnd !== this.props.canvasTimeEnd ||
-      nextProps.canvasWidth !== this.props.canvasWidth ||
-      nextProps.unit !== this.props.unit ||
-      nextProps.timeSteps !== this.props.timeSteps ||
-      nextProps.showPeriod !== this.props.showPeriod
+      nextProps.canvasTimeStart !== prevState.canvasTimeStart ||
+      nextProps.canvasTimeEnd !== prevState.canvasTimeEnd ||
+      nextProps.canvasWidth !== prevState.canvasWidth ||
+      nextProps.unit !== prevState.unit ||
+      nextProps.timeSteps !== prevState.timeSteps ||
+      nextProps.showPeriod !== prevState.showPeriod
     ) {
       const {
         canvasTimeStart,
@@ -84,7 +84,7 @@ export class CustomHeader extends React.Component {
         getLeftOffsetFromDate,
       } = nextProps;
 
-      const intervals = this.getHeaderIntervals({
+      const intervals = CustomHeader.getHeaderIntervals({
         canvasTimeStart,
         canvasTimeEnd,
         canvasWidth,
@@ -94,11 +94,12 @@ export class CustomHeader extends React.Component {
         getLeftOffsetFromDate,
       });
 
-      this.setState({ intervals });
+      return { intervals };
     }
+    return null;
   }
 
-  getHeaderIntervals = ({
+  static getHeaderIntervals = ({
     canvasTimeStart,
     canvasTimeEnd,
     unit,
@@ -106,23 +107,17 @@ export class CustomHeader extends React.Component {
     getLeftOffsetFromDate,
   }) => {
     const intervals = [];
-    iterateTimes(
-      canvasTimeStart,
-      canvasTimeEnd,
-      unit,
-      timeSteps,
-      (startTime, endTime) => {
-        const left = getLeftOffsetFromDate(startTime.valueOf());
-        const right = getLeftOffsetFromDate(endTime.valueOf());
-        const width = right - left;
-        intervals.push({
-          startTime,
-          endTime,
-          labelWidth: width,
-          left,
-        });
-      }
-    );
+    iterateTimes(canvasTimeStart, canvasTimeEnd, unit, timeSteps, (startTime, endTime) => {
+      const left = getLeftOffsetFromDate(startTime.valueOf());
+      const right = getLeftOffsetFromDate(endTime.valueOf());
+      const width = right - left;
+      intervals.push({
+        startTime,
+        endTime,
+        labelWidth: width,
+        left,
+      });
+    });
     return intervals;
   };
 
@@ -130,7 +125,7 @@ export class CustomHeader extends React.Component {
     const { style } = props;
     return {
       style: Object.assign({}, style ? style : {}, {
-        position: "relative",
+        position: 'relative',
         width: this.props.canvasWidth,
         height: this.props.height,
       }),
@@ -139,8 +134,7 @@ export class CustomHeader extends React.Component {
 
   getIntervalProps = (props = {}) => {
     const { interval, style } = props;
-    if (!interval)
-      throw new Error("you should provide interval to the prop getter");
+    if (!interval) throw new Error('you should provide interval to the prop getter');
     const { startTime, labelWidth, left } = interval;
     return {
       style: this.getIntervalStyle({
@@ -160,7 +154,7 @@ export class CustomHeader extends React.Component {
       ...style,
       left,
       width: labelWidth,
-      position: "absolute",
+      position: 'absolute',
     };
   };
 
