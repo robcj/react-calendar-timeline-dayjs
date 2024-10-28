@@ -20,15 +20,17 @@ Checkout the [examples here](https://github.com/namespace-ee/react-calendar-time
 
 # Getting started
 
-```bash
-# via yarn not available
-# yarn add react-calendar-timeline-dayjs
+Currently only available directly from GitHub. Can be installed using NPM:
 
-# via npm
-npm install --save react-calendar-timeline-dayjs
+```bash
+npm install --save react-calendar-timeline-dayjs "github:robcj/react-calendar-timeline-dayjs"
 ```
 
 `react-calendar-timeline-dayjs` has [react](https://reactjs.org/), [react-dom](https://reactjs.org/docs/react-dom.html), [`dayjs`](http://day.js.org/) and [`interactjs`](http://interactjs.io/docs/) as peer dependencies.
+
+# TypeScript
+
+This module is not written in TypeScript, but types are provided in types/index.d.ts which should import into your TypeScript project automatically.
 
 # Usage
 
@@ -528,8 +530,8 @@ sidebar. Will be passed the `group` and `isRightSidebar` as props.
 let groups = [
   {
     id: 1,
-    title: "Title",
-    tip: "additional information",
+    title: 'Title',
+    tip: 'additional information',
   },
 ];
 
@@ -565,11 +567,8 @@ verticalLineClassNamesForTime = (timeStart, timeEnd) => {
   const currentTimeEnd = dayjs(timeEnd);
 
   for (let holiday of holidays) {
-    if (
-      holiday.isSame(currentTimeStart, "day") &&
-      holiday.isSame(currentTimeEnd, "day")
-    ) {
-      return ["holiday"];
+    if (holiday.isSame(currentTimeStart, 'day') && holiday.isSame(currentTimeEnd, 'day')) {
+      return ['holiday'];
     }
   }
 };
@@ -600,7 +599,7 @@ import Timeline, {
   CustomMarker,
   TodayMarker,
   CursorMarker,
-} from "react-calendar-timeline";
+} from 'react-calendar-timeline';
 
 <Timeline>
   <TimelineMarkers>
@@ -611,8 +610,8 @@ import Timeline, {
       {({ styles, date }) => {
         const customStyles = {
           ...styles,
-          backgroundColor: "deeppink",
-          width: "4px",
+          backgroundColor: 'deeppink',
+          width: '4px',
         };
         return <div style={customStyles} onClick={someCustomHandler} />;
       }}
@@ -894,46 +893,46 @@ The `long`, `mediumLong`, `medium` and `short` will be be decided through the `l
 // default format object
 const format: LabelFormat = {
   year: {
-    long: "YYYY",
-    mediumLong: "YYYY",
-    medium: "YYYY",
-    short: "YY",
+    long: 'YYYY',
+    mediumLong: 'YYYY',
+    medium: 'YYYY',
+    short: 'YY',
   },
   month: {
-    long: "MMMM YYYY",
-    mediumLong: "MMMM",
-    medium: "MMMM",
-    short: "MM/YY",
+    long: 'MMMM YYYY',
+    mediumLong: 'MMMM',
+    medium: 'MMMM',
+    short: 'MM/YY',
   },
   week: {
-    long: "w",
-    mediumLong: "w",
-    medium: "w",
-    short: "w",
+    long: 'w',
+    mediumLong: 'w',
+    medium: 'w',
+    short: 'w',
   },
   day: {
-    long: "dddd, LL",
-    mediumLong: "dddd, LL",
-    medium: "dd D",
-    short: "D",
+    long: 'dddd, LL',
+    mediumLong: 'dddd, LL',
+    medium: 'dd D',
+    short: 'D',
   },
   hour: {
-    long: "dddd, LL, HH:00",
-    mediumLong: "L, HH:00",
-    medium: "HH:00",
-    short: "HH",
+    long: 'dddd, LL, HH:00',
+    mediumLong: 'L, HH:00',
+    medium: 'HH:00',
+    short: 'HH',
   },
   minute: {
-    long: "HH:mm",
-    mediumLong: "HH:mm",
-    medium: "HH:mm",
-    short: "mm",
+    long: 'HH:mm',
+    mediumLong: 'HH:mm',
+    medium: 'HH:mm',
+    short: 'mm',
   },
   second: {
-    long: "mm:ss",
-    mediumLong: "mm:ss",
-    medium: "mm:ss",
-    short: "ss",
+    long: 'mm:ss',
+    mediumLong: 'mm:ss',
+    medium: 'mm:ss',
+    short: 'ss',
   },
 };
 ```
@@ -983,11 +982,7 @@ data passed through headerData
 #### example
 
 ```jsx
-import Timeline, {
-  TimelineHeaders,
-  SidebarHeader,
-  DateHeader,
-} from "react-calendar-timeline";
+import Timeline, { TimelineHeaders, SidebarHeader, DateHeader } from 'react-calendar-timeline';
 
 <Timeline>
   <TimelineHeaders>
@@ -1002,7 +997,7 @@ import Timeline, {
       unit="day"
       labelFormat="MM/DD"
       style={{ height: 50 }}
-      data={{ someData: "example" }}
+      data={{ someData: 'example' }}
       intervalRenderer={({ getIntervalProps, intervalContext, data }) => {
         return (
           <div {...getIntervalProps()}>
@@ -1118,11 +1113,7 @@ pass through the `headerData` prop content
 #### example
 
 ```jsx
-import Timeline, {
-  TimelineHeaders,
-  SidebarHeader,
-  DateHeader,
-} from "react-calendar-timeline";
+import Timeline, { TimelineHeaders, SidebarHeader, DateHeader } from 'react-calendar-timeline';
 
 <Timeline>
   <TimelineHeaders>
@@ -1133,24 +1124,18 @@ import Timeline, {
     </SidebarHeader>
     <DateHeader unit="primaryHeader" />
     <DateHeader />
-    <CustomHeader height={50} headerData={{ someData: "data" }} unit="year">
-      {({
-        headerContext: { intervals },
-        getRootProps,
-        getIntervalProps,
-        showPeriod,
-        data,
-      }) => {
+    <CustomHeader height={50} headerData={{ someData: 'data' }} unit="year">
+      {({ headerContext: { intervals }, getRootProps, getIntervalProps, showPeriod, data }) => {
         return (
           <div {...getRootProps()}>
-            {intervals.map((interval) => {
+            {intervals.map(interval => {
               const intervalStyle = {
-                lineHeight: "30px",
-                textAlign: "center",
-                borderLeft: "1px solid black",
-                cursor: "pointer",
-                backgroundColor: "Turquoise",
-                color: "white",
+                lineHeight: '30px',
+                textAlign: 'center',
+                borderLeft: '1px solid black',
+                cursor: 'pointer',
+                backgroundColor: 'Turquoise',
+                color: 'white',
               };
               return (
                 <div
@@ -1162,9 +1147,7 @@ import Timeline, {
                     style: intervalStyle,
                   })}
                 >
-                  <div className="sticky">
-                    {interval.startTime.format("YYYY")}
-                  </div>
+                  <div className="sticky">{interval.startTime.format('YYYY')}</div>
                 </div>
               );
             })}
@@ -1226,7 +1209,7 @@ Alternatively you may import the transpiled version of the timeline like this:
 
 ```js
 // import Timeline from 'react-calendar-timeline'  // ESnext version
-import Timeline from "react-calendar-timeline/lib"; // ES5 version
+import Timeline from 'react-calendar-timeline/lib'; // ES5 version
 ```
 
 However doing so you lose on some of the features of webpack 2 and will potentially get a slightly larger bundle.
