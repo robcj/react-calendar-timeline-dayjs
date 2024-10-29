@@ -7,7 +7,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import js from '@eslint/js';
 import { FlatCompat } from '@eslint/eslintrc';
-import { singleQuote } from './prettier.config';
+// import { singleQuote } from './prettier.config.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -20,9 +20,9 @@ const compat = new FlatCompat({
 export default [
   ...compat.extends(
     'eslint:recommended',
-    'plugin:react/recommended'
+    'plugin:react/recommended',
     // "prettier",
-    // 'plugin:prettier/recommended'
+    'plugin:prettier/recommended'
     // "prettier/react",
   ),
   {
@@ -49,7 +49,7 @@ export default [
     },
 
     rules: {
-      // 'prettier/prettier': 'error', // Add this line to enforce Prettier rules
+      'prettier/prettier': 'error', // Add this line to enforce Prettier rules
       'react/jsx-uses-react': 2,
       'react/jsx-uses-vars': 2,
       'react/no-unused-prop-types': 2,
@@ -57,7 +57,7 @@ export default [
       'no-labels': 0,
       'arrow-parens': 0,
       semi: ['error', 'always'],
-      quotes: 'single',
+      quotes: ['error', 'single'], // Ensure this matches Prettier configuration
       'comma-dangle': [
         'error',
         {
