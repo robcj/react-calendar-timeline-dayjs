@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { getNextUnit } from "../utility/calendar";
-import { composeEvents } from "../utility/events";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { getNextUnit } from '../utility/calendar';
+import { composeEvents } from '../utility/events';
 
 class Interval extends React.PureComponent {
   static propTypes = {
@@ -27,15 +27,13 @@ class Interval extends React.PureComponent {
     }
   };
 
-  getIntervalProps = (props = {}) => {
-    return {
-      ...this.props.getIntervalProps({
-        interval: this.props.interval,
-        ...props,
-      }),
-      onClick: composeEvents(this.onIntervalClick, props.onClick),
-    };
-  };
+  getIntervalProps = (props = {}) => ({
+    ...this.props.getIntervalProps({
+      interval: this.props.interval,
+      ...props,
+    }),
+    onClick: composeEvents(this.onIntervalClick, props.onClick),
+  });
 
   render() {
     const { intervalText, interval, intervalRenderer, headerData } = this.props;
@@ -57,7 +55,7 @@ class Interval extends React.PureComponent {
       <div
         data-testid="dateHeaderInterval"
         {...this.getIntervalProps({})}
-        className={`rct-dateHeader ${this.props.primaryHeader ? "rct-dateHeader-primary" : ""}`}
+        className={`rct-dateHeader ${this.props.primaryHeader ? 'rct-dateHeader-primary' : ''}`}
       >
         <span>{intervalText}</span>
       </div>

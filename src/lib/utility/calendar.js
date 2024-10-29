@@ -266,11 +266,10 @@ export function getGroupedItems(items, groupOrders) {
 export function getVisibleItems(items, canvasTimeStart, canvasTimeEnd, keys) {
   const { itemTimeStartKey, itemTimeEndKey } = keys;
 
-  return items.filter(item => {
-    return (
+  return items.filter(
+    item =>
       _get(item, itemTimeStartKey) <= canvasTimeEnd && _get(item, itemTimeEndKey) >= canvasTimeStart
-    );
-  });
+  );
 }
 
 const EPSILON = 0.001;

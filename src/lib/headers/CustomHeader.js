@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TimelineHeadersConsumer } from './HeadersContext';
 import { TimelineStateConsumer } from '../timeline/TimelineStateContext';
 import { iterateTimes } from '../utility/calendar';
+import { TimelineHeadersConsumer } from './HeadersContext';
 
 export class CustomHeader extends React.Component {
   static propTypes = {
@@ -149,14 +149,12 @@ export class CustomHeader extends React.Component {
     };
   };
 
-  getIntervalStyle = ({ left, labelWidth, style }) => {
-    return {
-      ...style,
-      left,
-      width: labelWidth,
-      position: 'absolute',
-    };
-  };
+  getIntervalStyle = ({ left, labelWidth, style }) => ({
+    ...style,
+    left,
+    width: labelWidth,
+    position: 'absolute',
+  });
 
   getStateAndHelpers = () => {
     const {
@@ -196,32 +194,30 @@ export class CustomHeader extends React.Component {
   }
 }
 
-const CustomHeaderWrapper = ({ children, unit, headerData, height = 30 }) => {
-  return (
-    <TimelineStateConsumer>
-      {({ getTimelineState, showPeriod, getLeftOffsetFromDate }) => {
-        const timelineState = getTimelineState();
-        return (
-          <TimelineHeadersConsumer>
-            {({ timeSteps }) => (
-              <CustomHeader
-                timeSteps={timeSteps}
-                showPeriod={showPeriod}
-                unit={unit ? unit : timelineState.timelineUnit}
-                {...timelineState}
-                headerData={headerData}
-                getLeftOffsetFromDate={getLeftOffsetFromDate}
-                height={height}
-              >
-                {children}
-              </CustomHeader>
-            )}
-          </TimelineHeadersConsumer>
-        );
-      }}
-    </TimelineStateConsumer>
-  );
-};
+const CustomHeaderWrapper = ({ children, unit, headerData, height = 30 }) => (
+  <TimelineStateConsumer>
+    {({ getTimelineState, showPeriod, getLeftOffsetFromDate }) => {
+      const timelineState = getTimelineState();
+      return (
+        <TimelineHeadersConsumer>
+          {({ timeSteps }) => (
+            <CustomHeader
+              timeSteps={timeSteps}
+              showPeriod={showPeriod}
+              unit={unit ? unit : timelineState.timelineUnit}
+              {...timelineState}
+              headerData={headerData}
+              getLeftOffsetFromDate={getLeftOffsetFromDate}
+              height={height}
+            >
+              {children}
+            </CustomHeader>
+          )}
+        </TimelineHeadersConsumer>
+      );
+    }}
+  </TimelineStateConsumer>
+);
 
 CustomHeaderWrapper.propTypes = {
   children: PropTypes.func.isRequired,

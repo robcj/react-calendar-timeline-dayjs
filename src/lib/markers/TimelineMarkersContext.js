@@ -26,48 +26,36 @@ export class TimelineMarkersProvider extends React.Component {
     children: PropTypes.element.isRequired,
   };
 
-  handleSubscribeToMarker = (newMarker) => {
+  handleSubscribeToMarker = newMarker => {
     newMarker = {
       ...newMarker,
       // REVIEW: in the event that we accept id to be passed to the Marker components, this line would override those
       id: createId(),
     };
 
-    this.setState((state) => {
-      return {
-        markers: [...state.markers, newMarker],
-      };
-    });
+    this.setState(state => ({
+      markers: [...state.markers, newMarker],
+    }));
     return {
       unsubscribe: () => {
-        this.setState((state) => {
-          return {
-            markers: state.markers.filter(
-              (marker) => marker.id !== newMarker.id
-            ),
-          };
-        });
+        this.setState(state => ({
+          markers: state.markers.filter(marker => marker.id !== newMarker.id),
+        }));
       },
-      getMarker: () => {
-        return newMarker;
-      },
+      getMarker: () => newMarker,
     };
   };
 
-  handleUpdateMarker = (updateMarker) => {
-    const markerIndex = this.state.markers.findIndex(
-      (marker) => marker.id === updateMarker.id
-    );
+  handleUpdateMarker = updateMarker => {
+    const markerIndex = this.state.markers.findIndex(marker => marker.id === updateMarker.id);
     if (markerIndex < 0) return;
-    this.setState((state) => {
-      return {
-        markers: [
-          ...state.markers.slice(0, markerIndex),
-          updateMarker,
-          ...state.markers.slice(markerIndex + 1),
-        ],
-      };
-    });
+    this.setState(state => ({
+      markers: [
+        ...state.markers.slice(0, markerIndex),
+        updateMarker,
+        ...state.markers.slice(markerIndex + 1),
+      ],
+    }));
   };
 
   state = {

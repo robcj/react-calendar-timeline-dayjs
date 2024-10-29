@@ -26,12 +26,10 @@ class SidebarHeader extends React.PureComponent {
     };
   };
 
-  getStateAndHelpers = () => {
-    return {
-      getRootProps: this.getRootProps,
-      data: this.props.headerData,
-    };
-  };
+  getStateAndHelpers = () => ({
+    getRootProps: this.getRootProps,
+    data: this.props.headerData,
+  });
 
   render() {
     const props = this.getStateAndHelpers();
@@ -42,22 +40,18 @@ class SidebarHeader extends React.PureComponent {
 
 const SidebarWrapper = ({ children, variant = LEFT_VARIANT, headerData }) => (
   <TimelineHeadersConsumer>
-    {({ leftSidebarWidth, rightSidebarWidth }) => {
-      return (
-        <SidebarHeader
-          leftSidebarWidth={leftSidebarWidth}
-          rightSidebarWidth={rightSidebarWidth}
-          children={
-            children ||
-            (({ getRootProps }) => (
-              <div data-testid="sidebarHeader" {...getRootProps()} />
-            ))
-          }
-          variant={variant}
-          headerData={headerData}
-        />
-      );
-    }}
+    {({ leftSidebarWidth, rightSidebarWidth }) => (
+      <SidebarHeader
+        leftSidebarWidth={leftSidebarWidth}
+        rightSidebarWidth={rightSidebarWidth}
+        children={
+          children ||
+          (({ getRootProps }) => <div data-testid="sidebarHeader" {...getRootProps()} />)
+        }
+        variant={variant}
+        headerData={headerData}
+      />
+    )}
   </TimelineHeadersConsumer>
 );
 

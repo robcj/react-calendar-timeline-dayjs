@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import memoize from 'memoize-one';
 import { TimelineStateConsumer } from '../timeline/TimelineStateContext';
-import CustomHeader from './CustomHeader';
 import { getNextUnit } from '../utility/calendar';
 import { defaultHeaderFormats } from '../default-config';
-import memoize from 'memoize-one';
+import CustomHeader from './CustomHeader';
 import { CustomDateHeader } from './CustomDateHeader';
 
 class DateHeader extends React.Component {
@@ -32,12 +32,10 @@ class DateHeader extends React.Component {
     return this.props.timelineUnit;
   };
 
-  getRootStyle = memoize((style) => {
-    return {
-      height: 30,
-      ...style,
-    };
-  });
+  getRootStyle = memoize(style => ({
+    height: 30,
+    ...style,
+  }));
 
   getLabelFormat = (interval, unit, labelWidth) => {
     const { labelFormat } = this.props;
@@ -52,23 +50,14 @@ class DateHeader extends React.Component {
   };
 
   getHeaderData = memoize(
-    (
+    (intervalRenderer, style, className, getLabelFormat, unitProp, headerData) => ({
       intervalRenderer,
       style,
       className,
       getLabelFormat,
       unitProp,
-      headerData
-    ) => {
-      return {
-        intervalRenderer,
-        style,
-        className,
-        getLabelFormat,
-        unitProp,
-        headerData,
-      };
-    }
+      headerData,
+    })
   );
 
   render() {
@@ -134,12 +123,7 @@ DateHeaderWrapper.propTypes = {
   height: PropTypes.number,
 };
 
-function formatLabel(
-  [timeStart, timeEnd],
-  unit,
-  labelWidth,
-  formatOptions = defaultHeaderFormats
-) {
+function formatLabel([timeStart, timeEnd], unit, labelWidth, formatOptions = defaultHeaderFormats) {
   let format;
   if (labelWidth >= 150) {
     format = formatOptions[unit]['long'];

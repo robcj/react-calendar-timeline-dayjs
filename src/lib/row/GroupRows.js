@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
-import GroupRow from './GroupRow'
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import GroupRow from './GroupRow';
 
 export default class GroupRows extends Component {
   static propTypes = {
@@ -13,7 +13,7 @@ export default class GroupRows extends Component {
     groups: PropTypes.array.isRequired,
     horizontalLineClassNamesForGroup: PropTypes.func,
     onRowContextClick: PropTypes.func.isRequired,
-  }
+  };
 
   shouldComponentUpdate(nextProps) {
     return !(
@@ -21,7 +21,7 @@ export default class GroupRows extends Component {
       nextProps.lineCount === this.props.lineCount &&
       nextProps.groupHeights === this.props.groupHeights &&
       nextProps.groups === this.props.groups
-    )
+    );
   }
 
   render() {
@@ -35,8 +35,8 @@ export default class GroupRows extends Component {
       groups,
       horizontalLineClassNamesForGroup,
       onRowContextClick,
-    } = this.props
-    let lines = []
+    } = this.props;
+    let lines = [];
 
     for (let i = 0; i < lineCount; i++) {
       lines.push(
@@ -51,12 +51,12 @@ export default class GroupRows extends Component {
           horizontalLineClassNamesForGroup={horizontalLineClassNamesForGroup}
           style={{
             width: `${canvasWidth}px`,
-            height: `${groupHeights[i]}px`
+            height: `${groupHeights[i]}px`,
           }}
         />
-      )
+      );
     }
 
-    return <div className="rct-horizontal-lines">{lines}</div>
+    return <div className="rct-horizontal-lines">{lines}</div>;
   }
 }
