@@ -67,6 +67,7 @@ export default [
       'react/react-in-jsx-scope': 2,
       'no-labels': 0,
       'arrow-body-style': 1,
+      'no-console': 1,
       semi: ['error', 'always'],
       quotes: ['error', 'single'], // Ensure this matches Prettier configuration
       'comma-dangle': [

@@ -154,7 +154,7 @@
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.27.0",
     "regenerator-runtime": "^0.14.1",
-    "rimraf": "^2.6.2",
+    "rimraf": "^6.0.1",
     "sass": "^1.79.5",
     "sass-loader": "^16.0.2",
     "style-loader": "^4.0.0",
