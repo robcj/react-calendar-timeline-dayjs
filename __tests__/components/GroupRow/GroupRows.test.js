@@ -1,26 +1,26 @@
 /**
  * @jest-environment jsdom
  */
-import React from "react";
-import { mount } from "enzyme";
-import { noop } from "test-utility";
-import GroupRows from "lib/row/GroupRows";
+import React from 'react';
+import { render } from '@testing-library/react';
+import { noop } from 'test-utility';
+import GroupRows from 'lib/row/GroupRows';
 
 const defaultProps = {
   groups: [
     {
-      bgColor: "#e8ccff",
-      id: "2998",
+      bgColor: '#e8ccff',
+      id: '2998',
       label: 'Label Dustin"',
-      rightTitle: "Wolff",
-      title: "Carlotta",
+      rightTitle: 'Wolff',
+      title: 'Carlotta',
     },
     {
-      bgColor: "#e8ccff",
-      id: "2999",
+      bgColor: '#e8ccff',
+      id: '2999',
       label: 'Label Myrtle"',
       rightTitle: '"Sauer"',
-      title: "Elmer",
+      title: 'Elmer',
     },
   ],
   canvasWidth: 10,
@@ -32,11 +32,11 @@ const defaultProps = {
   onRowContextClick: noop,
 };
 
-describe("GroupRows", () => {
-  it("passes props and get right height for first group", () => {
-    const wrapper = mount(<GroupRows {...defaultProps} />);
+describe('GroupRows', () => {
+  it('passes props and get right height for first group', () => {
+    const { container } = render(<GroupRows {...defaultProps} />);
 
-    const component = wrapper.find("GroupRow").first();
-    expect(component.prop("style").height).toBe("30px");
+    const component = container.querySelector('.rct-horizontal-lines > div');
+    expect(component.style.height).toBe('30px');
   });
 });

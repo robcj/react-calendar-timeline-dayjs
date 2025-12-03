@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { render, fireEvent, cleanup } from 'react-testing-library'
+import { render, fireEvent } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { RenderWrapper } from 'test-utility/marker-renderer'
 import TimelineMarkers from 'lib/markers/public/TimelineMarkers'
@@ -11,7 +11,6 @@ import TodayMarker from 'lib/markers/public/TodayMarker'
 const defaultTestId = 'default-today-line'
 
 describe('TodayMarker', () => {
-  afterEach(cleanup)
   it('is present', () => {
     const { getByTestId } = render(
       <RenderWrapper>

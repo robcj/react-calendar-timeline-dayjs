@@ -1,10 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
-import createReactContext from "create-react-context";
-import {
-  calculateXPositionForTime,
-  calculateTimeForXPosition,
-} from "../utility/calendar";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { calculateXPositionForTime, calculateTimeForXPosition } from '../utility/calendar';
 
 /* this context will hold all information regarding timeline state:
   1. timeline width
@@ -28,7 +24,7 @@ const defaultContextState = {
   },
 };
 
-const { Consumer, Provider } = createReactContext(defaultContextState);
+const { Consumer, Provider } = React.createContext(defaultContextState);
 
 export class TimelineStateProvider extends React.Component {
   static propTypes = {
@@ -77,32 +73,18 @@ export class TimelineStateProvider extends React.Component {
     }; // REVIEW,
   };
 
-  getLeftOffsetFromDate = (date) => {
+  getLeftOffsetFromDate = date => {
     const { canvasTimeStart, canvasTimeEnd, canvasWidth } = this.props;
-    return calculateXPositionForTime(
-      canvasTimeStart,
-      canvasTimeEnd,
-      canvasWidth,
-      date
-    );
+    return calculateXPositionForTime(canvasTimeStart, canvasTimeEnd, canvasWidth, date);
   };
 
-  getDateFromLeftOffsetPosition = (leftOffset) => {
+  getDateFromLeftOffsetPosition = leftOffset => {
     const { canvasTimeStart, canvasTimeEnd, canvasWidth } = this.props;
-    return calculateTimeForXPosition(
-      canvasTimeStart,
-      canvasTimeEnd,
-      canvasWidth,
-      leftOffset
-    );
+    return calculateTimeForXPosition(canvasTimeStart, canvasTimeEnd, canvasWidth, leftOffset);
   };
 
   render() {
-    return (
-      <Provider value={this.state.timelineContext}>
-        {this.props.children}
-      </Provider>
-    );
+    return <Provider value={this.state.timelineContext}>{this.props.children}</Provider>;
   }
 }
 

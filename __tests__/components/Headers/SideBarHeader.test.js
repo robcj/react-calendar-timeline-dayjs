@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { render, cleanup } from 'react-testing-library'
+import { render } from '@testing-library/react'
 import DateHeader from 'lib/headers/DateHeader'
 import SidebarHeader from 'lib/headers/SidebarHeader'
 import TimelineHeaders from 'lib/headers/TimelineHeaders'
@@ -14,7 +14,6 @@ import {
 } from '../../test-utility/headerRenderers'
 
 describe('Testing SidebarHeader Component', () => {
-  afterEach(cleanup)
 
   //TODO: rename test
   it('Given sidebarHeader When pass style with overridden (width) Then it should not override the default values', () => {

@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from "react";
-import { render, cleanup } from "react-testing-library";
+import { render } from "@testing-library/react";
 import DateHeader from "lib/headers/DateHeader";
 import SidebarHeader from "lib/headers/SidebarHeader";
 import TimelineHeaders from "lib/headers/TimelineHeaders";
@@ -18,7 +18,6 @@ import utc from "dayjs/plugin/utc";
 dayjs.extend(utc);
 
 describe("CustomHeader Component Test", () => {
-  afterEach(cleanup);
 
   it("Given CustomHeader When pass a unit to it Then header should render that unit", () => {
     const { getAllByTestId } = render(

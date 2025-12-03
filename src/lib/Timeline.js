@@ -27,6 +27,7 @@ import { TimelineMarkersProvider } from './markers/TimelineMarkersContext'
 import { TimelineHeadersProvider } from './headers/HeadersContext'
 import TimelineHeaders from './headers/TimelineHeaders'
 import DateHeader from './headers/DateHeader'
+import TimelineContext from './timeline/TimelineContext'
 
 export default class ReactCalendarTimeline extends Component {
   static propTypes = {
@@ -195,18 +196,6 @@ export default class ReactCalendarTimeline extends Component {
     children: null,
 
     selected: null
-  }
-
-  static childContextTypes = {
-    getTimelineContext: PropTypes.func
-  }
-
-  getChildContext() {
-    return {
-      getTimelineContext: () => {
-        return this.getTimelineContext()
-      }
-    }
   }
 
   getTimelineContext = () => {
@@ -1004,6 +993,10 @@ export default class ReactCalendarTimeline extends Component {
       height: `${height}px`
     }
 
+    const timelineContextValue = {
+      getTimelineContext: this.getTimelineContext
+    }
+
     return (
       <TimelineStateProvider
         visibleTimeStart={visibleTimeStart}
@@ -1015,13 +1008,14 @@ export default class ReactCalendarTimeline extends Component {
         timelineUnit={minUnit}
         timelineWidth={this.state.width}
       >
-        <TimelineMarkersProvider>
-          <TimelineHeadersProvider
-            registerScroll={this.handleHeaderRef}
-            timeSteps={timeSteps}
-            leftSidebarWidth={this.props.sidebarWidth}
-            rightSidebarWidth={this.props.rightSidebarWidth}
-          >
+        <TimelineContext.Provider value={timelineContextValue}>
+          <TimelineMarkersProvider>
+            <TimelineHeadersProvider
+              registerScroll={this.handleHeaderRef}
+              timeSteps={timeSteps}
+              leftSidebarWidth={this.props.sidebarWidth}
+              rightSidebarWidth={this.props.rightSidebarWidth}
+            >
             <div
               style={this.props.style}
               ref={el => (this.container = el)}
@@ -1082,6 +1076,7 @@ export default class ReactCalendarTimeline extends Component {
             </div>
           </TimelineHeadersProvider>
         </TimelineMarkersProvider>
+        </TimelineContext.Provider>
       </TimelineStateProvider>
     )
   }

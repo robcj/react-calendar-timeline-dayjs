@@ -8,6 +8,7 @@ import { composeEvents } from '../utility/events';
 import { defaultItemRenderer } from './defaultItemRenderer';
 import { coordinateToTimeRatio } from '../utility/calendar';
 import { getSumScroll, getSumOffset } from '../utility/dom-helpers';
+import TimelineContext from '../timeline/TimelineContext';
 import {
   overridableStyles,
   selectedStyle,
@@ -65,9 +66,7 @@ export default class Item extends Component {
     itemRenderer: defaultItemRenderer,
   };
 
-  static contextTypes = {
-    getTimelineContext: PropTypes.func,
-  };
+  static contextType = TimelineContext;
 
   constructor(props) {
     super(props);

@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { render } from 'react-testing-library'
+import { render } from '@testing-library/react'
 import DateHeader from 'lib/headers/DateHeader'
 import SidebarHeader from 'lib/headers/SidebarHeader'
 import TimelineHeaders from 'lib/headers/TimelineHeaders'

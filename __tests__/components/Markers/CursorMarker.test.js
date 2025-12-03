@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { render, fireEvent, cleanup } from 'react-testing-library'
+import { render, fireEvent } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import TimelineMarkers from 'lib/markers/public/TimelineMarkers'
 import CursorMarker from 'lib/markers/public/CursorMarker'
@@ -17,7 +17,6 @@ import { MarkerCanvasProvider } from 'lib/markers/MarkerCanvasContext'
  */
 
 describe('CursorMarker', () => {
-  afterEach(cleanup)
   const defaultCursorMarkerTestId = 'default-cursor-marker'
   it('renders one', () => {
     const subscribeToMouseOverMock = jest.fn()

@@ -7,7 +7,6 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import js from '@eslint/js';
 import { FlatCompat } from '@eslint/eslintrc';
-import { singleQuote } from './prettier.config';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -57,7 +56,7 @@ export default [
       'no-labels': 0,
       'arrow-parens': 0,
       semi: ['error', 'always'],
-      quotes: 'single',
+      quotes: ['error', 'single'],
       'comma-dangle': [
         'error',
         {

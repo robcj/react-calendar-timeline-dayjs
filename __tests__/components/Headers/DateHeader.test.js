@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from "react";
-import { render, cleanup, within, fireEvent } from "react-testing-library";
+import { render, within, fireEvent } from "@testing-library/react";
 import DateHeader from "lib/headers/DateHeader";
 import SidebarHeader from "lib/headers/SidebarHeader";
 import TimelineHeaders from "lib/headers/TimelineHeaders";
@@ -11,7 +11,6 @@ import { RenderHeadersWrapper } from "../../test-utility/header-renderer";
 import dayjs from "dayjs";
 
 describe("Testing DateHeader Component", () => {
-  afterEach(cleanup);
 
   const format = "MM/DD/YYYY hh:mm a";
 
@@ -46,7 +45,6 @@ describe("Testing DateHeader Component", () => {
   });
 
   describe("DateHeader labelFormat", () => {
-    afterEach(cleanup);
 
     it("Given Dateheader When pass a string typed labelFormat Then it should render the intervals with the given format", () => {
       const { getAllByTestId } = render(

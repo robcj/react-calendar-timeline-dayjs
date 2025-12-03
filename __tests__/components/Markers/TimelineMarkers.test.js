@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { render } from 'react-testing-library'
+import { render } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import TimelineMarkers from 'lib/markers/public/TimelineMarkers'
 import TodayMarker from 'lib/markers/public/TodayMarker'

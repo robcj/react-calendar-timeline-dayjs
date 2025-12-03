@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'react'
-import { render, fireEvent, cleanup } from 'react-testing-library'
+import { render, fireEvent } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import TimelineMarkers from 'lib/markers/public/TimelineMarkers'
 import CustomMarker from 'lib/markers/public/CustomMarker'
@@ -10,7 +10,6 @@ import { RenderWrapper } from 'test-utility/marker-renderer'
 import { TimelineStateConsumer } from 'lib/timeline/TimelineStateContext'
 
 describe('CustomMarker', () => {
-  afterEach(cleanup)
   const defaultCustomMarkerTestId = 'default-customer-marker-id'
   it('renders one', () => {
     const { getByTestId } = render(
