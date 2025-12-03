@@ -1,14 +1,14 @@
 /**
  * @jest-environment jsdom
  */
-import React from 'react'
-import { render } from '@testing-library/react'
-import DateHeader from 'lib/headers/DateHeader'
-import SidebarHeader from 'lib/headers/SidebarHeader'
-import TimelineHeaders from 'lib/headers/TimelineHeaders'
-import CustomHeader from 'lib/headers/CustomHeader'
+import React from 'react';
+import { render } from '@testing-library/react';
+import DateHeader from 'lib/headers/DateHeader';
+import SidebarHeader from 'lib/headers/SidebarHeader';
+import TimelineHeaders from 'lib/headers/TimelineHeaders';
+import CustomHeader from 'lib/headers/CustomHeader';
 
-import { RenderHeadersWrapper } from './header-renderer'
+import { RenderHeadersWrapper } from './header-renderer';
 export function renderSidebarHeaderWithCustomValues({
   variant = undefined,
   props,
@@ -17,10 +17,7 @@ export function renderSidebarHeaderWithCustomValues({
   extraProps,
 } = {}) {
   return render(
-    <RenderHeadersWrapper
-      timelineState={timelineState}
-      headersState={headersState}
-    >
+    <RenderHeadersWrapper timelineState={timelineState} headersState={headersState}>
       <TimelineHeaders>
         <SidebarHeader variant={variant} headerData={extraProps}>
           {({ getRootProps }) => {
@@ -29,14 +26,14 @@ export function renderSidebarHeaderWithCustomValues({
                 SidebarHeader
                 <div>Should Be Rendred</div>
               </div>
-            )
+            );
           }}
         </SidebarHeader>
         <DateHeader primaryHeader />
         <DateHeader />
       </TimelineHeaders>
-    </RenderHeadersWrapper>,
-  )
+    </RenderHeadersWrapper>
+  );
 }
 export function renderTwoSidebarHeadersWithCustomValues({
   props,
@@ -44,10 +41,7 @@ export function renderTwoSidebarHeadersWithCustomValues({
   headersState,
 } = {}) {
   return render(
-    <RenderHeadersWrapper
-      timelineState={timelineState}
-      headersState={headersState}
-    >
+    <RenderHeadersWrapper timelineState={timelineState} headersState={headersState}>
       <TimelineHeaders>
         <SidebarHeader variant={'left'} headerData={props}>
           {({ getRootProps }) => {
@@ -56,19 +50,19 @@ export function renderTwoSidebarHeadersWithCustomValues({
                 LeftSideBar
                 <div>Should Be Rendred</div>
               </div>
-            )
+            );
           }}
         </SidebarHeader>
         <SidebarHeader variant={'right'} headerData={props}>
           {({ getRootProps, data }) => {
-            return <div {...getRootProps(data)}>RightSideBar</div>
+            return <div {...getRootProps(data)}>RightSideBar</div>;
           }}
         </SidebarHeader>
         <DateHeader primaryHeader />
         <DateHeader />
       </TimelineHeaders>
-    </RenderHeadersWrapper>,
-  )
+    </RenderHeadersWrapper>
+  );
 }
 
 export function renderTimelineWithLeftAndRightSidebar({
@@ -80,10 +74,7 @@ export function renderTimelineWithLeftAndRightSidebar({
   headersState,
 } = {}) {
   return render(
-    <RenderHeadersWrapper
-      timelineState={timelineState}
-      headersState={headersState}
-    >
+    <RenderHeadersWrapper timelineState={timelineState} headersState={headersState}>
       <TimelineHeaders
         style={style}
         className={className}
@@ -96,7 +87,7 @@ export function renderTimelineWithLeftAndRightSidebar({
               <div data-testid="right-header" {...getRootProps()}>
                 Right
               </div>
-            )
+            );
           }}
         </SidebarHeader>
         <SidebarHeader variant="left">
@@ -105,24 +96,17 @@ export function renderTimelineWithLeftAndRightSidebar({
               <div data-testid="left-header" {...getRootProps()}>
                 Left
               </div>
-            )
+            );
           }}
         </SidebarHeader>
       </TimelineHeaders>
-    </RenderHeadersWrapper>,
-  )
+    </RenderHeadersWrapper>
+  );
 }
 
-export function renderTimelineWithVariantSidebar({
-  variant,
-  timelineState,
-  headersState,
-} = {}) {
+export function renderTimelineWithVariantSidebar({ variant, timelineState, headersState } = {}) {
   return render(
-    <RenderHeadersWrapper
-      timelineState={timelineState}
-      headersState={headersState}
-    >
+    <RenderHeadersWrapper timelineState={timelineState} headersState={headersState}>
       <TimelineHeaders>
         <SidebarHeader variant={variant}>
           {({ getRootProps }) => {
@@ -130,12 +114,12 @@ export function renderTimelineWithVariantSidebar({
               <div data-testid="sidebarHeader" {...getRootProps()}>
                 Header
               </div>
-            )
+            );
           }}
         </SidebarHeader>
       </TimelineHeaders>
-    </RenderHeadersWrapper>,
-  )
+    </RenderHeadersWrapper>
+  );
 }
 
 export function getCustomHeadersInTimeline({
@@ -146,10 +130,7 @@ export function getCustomHeadersInTimeline({
   headersState,
 } = {}) {
   return (
-    <RenderHeadersWrapper
-      timelineState={timelineState}
-      headersState={headersState}
-    >
+    <RenderHeadersWrapper timelineState={timelineState} headersState={headersState}>
       <TimelineHeaders>
         <CustomHeader unit={unit} headerData={props}>
           {({
@@ -161,30 +142,28 @@ export function getCustomHeadersInTimeline({
           }) => {
             return (
               <div data-testid="customHeader" {...getRootProps(data)}>
-                {intervals.map((interval) => {
+                {intervals.map(interval => {
                   return (
                     <div
                       key={`header-interval-${interval.startTime.valueOf()}`}
                       data-testid="customHeaderInterval"
                       onClick={() => {
-                        showPeriod(interval.startTime, interval.endTime)
+                        showPeriod(interval.startTime, interval.endTime);
                       }}
                       {...getIntervalProps({
                         interval,
                         style: intervalStyle,
                       })}
                     >
-                      <div className="sticky">
-                        {interval.startTime.format('DD/MM/YYYY')}
-                      </div>
+                      <div className="sticky">{interval.startTime.format('DD/MM/YYYY')}</div>
                     </div>
-                  )
+                  );
                 })}
               </div>
-            )
+            );
           }}
         </CustomHeader>
       </TimelineHeaders>
     </RenderHeadersWrapper>
-  )
+  );
 }

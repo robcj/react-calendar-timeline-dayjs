@@ -9,9 +9,9 @@ const TimelineContext = React.createContext({
       visibleTimeStart: 0,
       visibleTimeEnd: 0,
       canvasTimeStart: 0,
-      canvasTimeEnd: 0
+      canvasTimeEnd: 0,
     };
-  }
+  },
 });
 
 export default TimelineContext;

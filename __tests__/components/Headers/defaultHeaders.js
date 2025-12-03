@@ -1,32 +1,32 @@
 /**
  * @jest-environment jsdom
  */
-import React from "react";
-import { render } from "@testing-library/react";
-import { items, groups } from "../../../__fixtures__/itemsAndGroups";
-import { props as defaultProps } from "../../../__fixtures__/stateAndProps";
-import Timeline from "lib/Timeline";
-import "@testing-library/jest-dom";
+import React from 'react';
+import { render } from '@testing-library/react';
+import { items, groups } from '../../../__fixtures__/itemsAndGroups';
+import { props as defaultProps } from '../../../__fixtures__/stateAndProps';
+import Timeline from 'lib/Timeline';
+import '@testing-library/jest-dom';
 
 /**
  * Testing The Default Functionality
  */
-describe("Renders default headers correctly", () => {
-  it("Given Timeline When not using TimelineHeaders then it should render 2 DateHeaders and a left sidebar header by default ", () => {
+describe('Renders default headers correctly', () => {
+  it('Given Timeline When not using TimelineHeaders then it should render 2 DateHeaders and a left sidebar header by default ', () => {
     const { getAllByTestId, getByTestId } = renderDefaultTimeline();
-    expect(getAllByTestId("dateHeader")).toHaveLength(2);
-    expect(getByTestId("headerContainer").children).toHaveLength(2);
-    expect(getByTestId("sidebarHeader")).toBeInTheDocument();
+    expect(getAllByTestId('dateHeader')).toHaveLength(2);
+    expect(getByTestId('headerContainer').children).toHaveLength(2);
+    expect(getByTestId('sidebarHeader')).toBeInTheDocument();
   });
-  it("Given TimelineHeader When pass a rightSidebarWidthWidth Then it should render two sidebar headers", () => {
+  it('Given TimelineHeader When pass a rightSidebarWidthWidth Then it should render two sidebar headers', () => {
     let rightSidebarWidth = 150;
     const { getAllByTestId } = renderDefaultTimeline({ rightSidebarWidth });
-    const sidebarHeaders = getAllByTestId("sidebarHeader");
+    const sidebarHeaders = getAllByTestId('sidebarHeader');
     expect(sidebarHeaders).toHaveLength(2);
     expect(sidebarHeaders[0]).toBeInTheDocument();
     expect(sidebarHeaders[1]).toBeInTheDocument();
     const { width } = getComputedStyle(sidebarHeaders[1]);
-    expect(width).toBe("150px");
+    expect(width).toBe('150px');
   });
 });
 
