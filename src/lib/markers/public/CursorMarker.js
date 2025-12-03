@@ -1,30 +1,30 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { TimelineMarkersConsumer } from '../TimelineMarkersContext'
-import { TimelineMarkerType } from '../markerType'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { TimelineMarkersConsumer } from '../TimelineMarkersContext';
+import { TimelineMarkerType } from '../markerType';
 
 class CursorMarker extends React.Component {
   static propTypes = {
     subscribeMarker: PropTypes.func.isRequired,
-    children: PropTypes.func
-  }
+    children: PropTypes.func,
+  };
 
   componentDidMount() {
     const { unsubscribe } = this.props.subscribeMarker({
       type: TimelineMarkerType.Cursor,
-      renderer: this.props.children
-    })
-    this.unsubscribe = unsubscribe
+      renderer: this.props.children,
+    });
+    this.unsubscribe = unsubscribe;
   }
 
   componentWillUnmount() {
     if (this.unsubscribe != null) {
-      this.unsubscribe()
-      this.unsubscribe = null
+      this.unsubscribe();
+      this.unsubscribe = null;
     }
   }
   render() {
-    return null
+    return null;
   }
 }
 
@@ -32,13 +32,11 @@ class CursorMarker extends React.Component {
 const CursorMarkerWrapper = props => {
   return (
     <TimelineMarkersConsumer>
-      {({ subscribeMarker }) => (
-        <CursorMarker subscribeMarker={subscribeMarker} {...props} />
-      )}
+      {({ subscribeMarker }) => <CursorMarker subscribeMarker={subscribeMarker} {...props} />}
     </TimelineMarkersConsumer>
-  )
-}
+  );
+};
 
-CursorMarkerWrapper.displayName = 'CursorMarkerWrapper'
+CursorMarkerWrapper.displayName = 'CursorMarkerWrapper';
 
-export default CursorMarkerWrapper
+export default CursorMarkerWrapper;

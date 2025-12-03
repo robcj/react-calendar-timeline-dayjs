@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import PreventClickOnDrag from '../interaction/PreventClickOnDrag'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import PreventClickOnDrag from '../interaction/PreventClickOnDrag';
 
 class GroupRow extends Component {
   static propTypes = {
@@ -11,8 +11,8 @@ class GroupRow extends Component {
     style: PropTypes.object.isRequired,
     clickTolerance: PropTypes.number.isRequired,
     group: PropTypes.object.isRequired,
-    horizontalLineClassNamesForGroup: PropTypes.func
-  }
+    horizontalLineClassNamesForGroup: PropTypes.func,
+  };
 
   render() {
     const {
@@ -23,8 +23,8 @@ class GroupRow extends Component {
       onClick,
       clickTolerance,
       horizontalLineClassNamesForGroup,
-      group
-    } = this.props
+      group,
+    } = this.props;
 
     let classNamesForGroup = [];
     if (horizontalLineClassNamesForGroup) {
@@ -36,12 +36,15 @@ class GroupRow extends Component {
         <div
           onContextMenu={onContextMenu}
           onDoubleClick={onDoubleClick}
-          className={(isEvenRow ? 'rct-hl-even ' : 'rct-hl-odd ') + (classNamesForGroup ? classNamesForGroup.join(' ') : '')}
+          className={
+            (isEvenRow ? 'rct-hl-even ' : 'rct-hl-odd ') +
+            (classNamesForGroup ? classNamesForGroup.join(' ') : '')
+          }
           style={style}
         />
       </PreventClickOnDrag>
-    )
+    );
   }
 }
 
-export default GroupRow
+export default GroupRow;

@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 // Is this necessary? The initial reason for including this is for organization sake in the
 // user code e.g.
 
@@ -14,7 +16,11 @@
 
 // If we decide to pass in props to TimelineMarkers, then yes, this is necessary.
 const TimelineMarkers = props => {
-  return props.children || null
-}
+  return props.children || null;
+};
 
-export default TimelineMarkers
+export default TimelineMarkers;
+
+TimelineMarkers.propTypes = {
+  children: PropTypes.node.isNotRequired,
+};

@@ -277,13 +277,10 @@ export default class ReactCalendarTimeline extends Component {
       this.state.newGroupOrder
     );
 
-    /* eslint-disable react/no-direct-mutation-state */
     this.state.dimensionItems = dimensionItems;
     this.state.height = height;
     this.state.groupHeights = groupHeights;
     this.state.groupTops = groupTops;
-
-    /* eslint-enable */
   }
 
   componentDidMount() {

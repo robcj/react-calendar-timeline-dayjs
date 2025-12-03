@@ -1,8 +1,8 @@
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
-import { iterateTimes } from '../utility/calendar'
-import { TimelineStateConsumer } from '../timeline/TimelineStateContext'
+import { iterateTimes } from '../utility/calendar';
+import { TimelineStateConsumer } from '../timeline/TimelineStateContext';
 
 const passThroughPropTypes = {
   canvasTimeStart: PropTypes.number.isRequired,
@@ -12,14 +12,14 @@ const passThroughPropTypes = {
   minUnit: PropTypes.string.isRequired,
   timeSteps: PropTypes.object.isRequired,
   height: PropTypes.number.isRequired,
-  verticalLineClassNamesForTime: PropTypes.func
-}
+  verticalLineClassNamesForTime: PropTypes.func,
+};
 
 class Columns extends Component {
   static propTypes = {
     ...passThroughPropTypes,
-    getLeftOffsetFromDate: PropTypes.func.isRequired
-  }
+    getLeftOffsetFromDate: PropTypes.func.isRequired,
+  };
 
   shouldComponentUpdate(nextProps) {
     return !(
@@ -30,71 +30,64 @@ class Columns extends Component {
       nextProps.minUnit === this.props.minUnit &&
       nextProps.timeSteps === this.props.timeSteps &&
       nextProps.height === this.props.height &&
-      nextProps.verticalLineClassNamesForTime ===
-        this.props.verticalLineClassNamesForTime
-    )
+      nextProps.verticalLineClassNamesForTime === this.props.verticalLineClassNamesForTime
+    );
   }
 
   render() {
     const {
       canvasTimeStart,
       canvasTimeEnd,
-      canvasWidth,
+      // canvasWidth,
       minUnit,
       timeSteps,
       height,
       verticalLineClassNamesForTime,
-      getLeftOffsetFromDate
-    } = this.props
-    const ratio = canvasWidth / (canvasTimeEnd - canvasTimeStart)
+      getLeftOffsetFromDate,
+    } = this.props;
+    // const ratio = canvasWidth / (canvasTimeEnd - canvasTimeStart);
 
-    let lines = []
+    let lines = [];
 
-    iterateTimes(
-      canvasTimeStart,
-      canvasTimeEnd,
-      minUnit,
-      timeSteps,
-      (time, nextTime) => {
-        const minUnitValue = time.get(minUnit === 'day' ? 'date' : minUnit)
-        const firstOfType = minUnitValue === (minUnit === 'day' ? 1 : 0)
+    iterateTimes(canvasTimeStart, canvasTimeEnd, minUnit, timeSteps, (time, nextTime) => {
+      const minUnitValue = time.get(minUnit === 'day' ? 'date' : minUnit);
+      const firstOfType = minUnitValue === (minUnit === 'day' ? 1 : 0);
 
-        let classNamesForTime = []
-        if (verticalLineClassNamesForTime) {
-          classNamesForTime = verticalLineClassNamesForTime(
-            time.unix() * 1000, // turn into ms, which is what verticalLineClassNamesForTime expects
-            nextTime.unix() * 1000 - 1
-          )
-        }
-
-        // TODO: rename or remove class that has reference to vertical-line
-        const classNames =
-          'rct-vl' +
-          (firstOfType ? ' rct-vl-first' : '') +
-          (minUnit === 'day' || minUnit === 'hour' || minUnit === 'minute'
-            ? ` rct-day-${time.day()} `
-            : ' ') +
-          classNamesForTime.join(' ')
-
-        const left = getLeftOffsetFromDate(time.valueOf())
-        const right = getLeftOffsetFromDate(nextTime.valueOf())
-        lines.push(
-          <div
-            key={`line-${time.valueOf()}`}
-            className={classNames}
-            style={{
-              pointerEvents: 'none',
-              top: '0px',
-              left: `${left}px`,
-              width: `${right - left}px`,
-              height: `${height}px`
-            }}
-          />
-        )
+      let classNamesForTime = [];
+      if (verticalLineClassNamesForTime) {
+        classNamesForTime = verticalLineClassNamesForTime(
+          time.unix() * 1000, // turn into ms, which is what verticalLineClassNamesForTime expects
+          nextTime.unix() * 1000 - 1
+        );
       }
-    )
 
-    return <div className="rct-vertical-lines">{lines}</div>
+      // TODO: rename or remove class that has reference to vertical-line
+      const classNames =
+        'rct-vl' +
+        (firstOfType ? ' rct-vl-first' : '') +
+        (minUnit === 'day' || minUnit === 'hour' || minUnit === 'minute'
+          ? ` rct-day-${time.day()} `
+          : ' ') +
+        classNamesForTime.join(' ');
+
+      const left = getLeftOffsetFromDate(time.valueOf());
+      const right = getLeftOffsetFromDate(nextTime.valueOf());
+      lines.push(
+        <div
+          key={`line-${time.valueOf()}`}
+          className={classNames}
+          style={{
+            pointerEvents: 'none',
+            top: '0px',
+            left: `${left}px`,
+            width: `${right - left}px`,
+            height: `${height}px`,
+          }}
+        />
+      );
+    });
+
+    return <div className="rct-vertical-lines">{lines}</div>;
   }
 }
 
@@ -105,11 +98,11 @@ const ColumnsWrapper = ({ ...props }) => {
         <Columns getLeftOffsetFromDate={getLeftOffsetFromDate} {...props} />
       )}
     </TimelineStateConsumer>
-  )
-}
+  );
+};
 
 ColumnsWrapper.defaultProps = {
-  ...passThroughPropTypes
-}
+  ...passThroughPropTypes,
+};
 
-export default ColumnsWrapper
+export default ColumnsWrapper;

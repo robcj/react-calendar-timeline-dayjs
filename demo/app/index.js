@@ -4,19 +4,32 @@ import React, { Component } from 'react';
 
 import { HashRouter as Router, Route, Link, useLocation, Routes } from 'react-router';
 
+import DemoMain from './demo-main';
+import DemoPerformance from './demo-performance';
+import DemoTreeGroups from './demo-tree-groups';
+import DemoLinkedTimelines from './demo-linked-timelines';
+import DemoElementResize from './demo-element-resize';
+import DemoRenderers from './demo-renderers';
+import DemoVerticalClasses from './demo-vertical-classes';
+import DemoCustomItems from './demo-custom-items';
+import DemoCustomHeaders from './demo-headers';
+import DemoCustomInfoLabel from './demo-custom-info-label';
+import DemoControledSelect from './demo-controlled-select';
+import DemoControlledScrolling from './demo-controlled-scrolling';
+
 const demos = {
-  main: require('./demo-main').default,
-  performance: require('./demo-performance').default,
-  treeGroups: require('./demo-tree-groups').default,
-  linkedTimelines: require('./demo-linked-timelines').default,
-  elementResize: require('./demo-element-resize').default,
-  renderers: require('./demo-renderers').default,
-  verticalClasses: require('./demo-vertical-classes').default,
-  customItems: require('./demo-custom-items').default,
-  customHeaders: require('./demo-headers').default,
-  customInfoLabel: require('./demo-custom-info-label').default,
-  controledSelect: require('./demo-controlled-select').default,
-  controlledScrolling: require('./demo-controlled-scrolling').default,
+  main: DemoMain,
+  performance: DemoPerformance,
+  treeGroups: DemoTreeGroups,
+  linkedTimelines: DemoLinkedTimelines,
+  elementResize: DemoElementResize,
+  renderers: DemoRenderers,
+  verticalClasses: DemoVerticalClasses,
+  customItems: DemoCustomItems,
+  customHeaders: DemoCustomHeaders,
+  customInfoLabel: DemoCustomInfoLabel,
+  controledSelect: DemoControledSelect,
+  controlledScrolling: DemoControlledScrolling,
 };
 
 // A simple component that shows the pathname of the current location
@@ -42,16 +55,20 @@ function Menu() {
 
 class App extends Component {
   render() {
+    const firstDemoKey = Object.keys(demos)[0];
+    const FirstDemo = demos[firstDemoKey];
+
     return (
       <Router>
         <div>
           <Menu />
           <div className="demo-demo">
             <Routes>
-              <Route path="/" element={React.createElement(demos[Object.keys(demos)[0]])} />
-              {Object.keys(demos).map(key => (
-                <Route key={key} path={`/${key}`} element={React.createElement(demos[key])} />
-              ))}
+              <Route path="/" element={<FirstDemo />} />
+              {Object.keys(demos).map(key => {
+                const DemoComponent = demos[key];
+                return <Route key={key} path={`/${key}`} element={<DemoComponent />} />;
+              })}
             </Routes>
           </div>
         </div>

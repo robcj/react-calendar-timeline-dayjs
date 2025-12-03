@@ -5,7 +5,6 @@ import { noop } from '../utility/generic';
 const defaultContextState = {
   markers: [],
   subscribeMarker: () => {
-    // eslint-disable-next-line
     console.warn('default subscribe marker used');
     return noop;
   },

@@ -1,26 +1,17 @@
-import React from "react";
-import Interval from "./Interval";
+import React from 'react';
+import PropTypes from 'prop-types';
+import Interval from './Interval';
+
 export function CustomDateHeader({
   headerContext: { intervals, unit },
   getRootProps,
   getIntervalProps,
   showPeriod,
-  data: {
-    style,
-    intervalRenderer,
-    className,
-    getLabelFormat,
-    unitProp,
-    headerData,
-  },
+  data: { style, intervalRenderer, className, getLabelFormat, unitProp, headerData },
 }) {
   return (
-    <div
-      data-testid={`dateHeader`}
-      className={className}
-      {...getRootProps({ style })}
-    >
-      {intervals.map((interval) => {
+    <div data-testid="dateHeader" className={className} {...getRootProps({ style })}>
+      {intervals.map(interval => {
         const intervalText = getLabelFormat(
           [interval.startTime, interval.endTime],
           unit,
@@ -33,7 +24,7 @@ export function CustomDateHeader({
             interval={interval}
             showPeriod={showPeriod}
             intervalText={intervalText}
-            primaryHeader={unitProp === "primaryHeader"}
+            primaryHeader={unitProp === 'primaryHeader'}
             getIntervalProps={getIntervalProps}
             intervalRenderer={intervalRenderer}
             headerData={headerData}
@@ -43,3 +34,21 @@ export function CustomDateHeader({
     </div>
   );
 }
+
+CustomDateHeader.propTypes = {
+  headerContext: PropTypes.shape({
+    intervals: PropTypes.array.isRequired,
+    unit: PropTypes.string.isRequired,
+  }).isRequired,
+  getRootProps: PropTypes.func.isRequired,
+  getIntervalProps: PropTypes.func.isRequired,
+  showPeriod: PropTypes.func.isRequired,
+  data: PropTypes.shape({
+    style: PropTypes.object,
+    intervalRenderer: PropTypes.func,
+    className: PropTypes.string,
+    getLabelFormat: PropTypes.func.isRequired,
+    unitProp: PropTypes.string.isRequired,
+    headerData: PropTypes.object,
+  }).isRequired,
+};

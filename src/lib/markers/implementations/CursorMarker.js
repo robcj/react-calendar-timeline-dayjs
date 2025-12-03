@@ -1,12 +1,9 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import {
-  createMarkerStylesWithLeftOffset,
-  createDefaultRenderer
-} from './shared'
-import { MarkerCanvasConsumer } from '../MarkerCanvasContext'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { createMarkerStylesWithLeftOffset, createDefaultRenderer } from './shared';
+import { MarkerCanvasConsumer } from '../MarkerCanvasContext';
 
-const defaultRenderer = createDefaultRenderer('default-cursor-marker')
+const defaultRenderer = createDefaultRenderer('default-cursor-marker');
 
 /**
  * CursorMarker implementation subscribes to 'subscribeToCanvasMouseOver' on mount.
@@ -21,52 +18,50 @@ const defaultRenderer = createDefaultRenderer('default-cursor-marker')
 class CursorMarker extends React.Component {
   static propTypes = {
     subscribeToCanvasMouseOver: PropTypes.func.isRequired,
-    renderer: PropTypes.func
-  }
+    renderer: PropTypes.func,
+  };
 
   static defaultProps = {
-    renderer: defaultRenderer
-  }
+    renderer: defaultRenderer,
+  };
 
   constructor() {
-    super()
+    super();
 
     this.state = {
       leftOffset: 0,
       date: 0,
-      isShowingCursor: false
-    }
+      isShowingCursor: false,
+    };
   }
 
   handleCanvasMouseOver = ({ leftOffset, date, isCursorOverCanvas }) => {
     this.setState({
       leftOffset,
       date,
-      isShowingCursor: isCursorOverCanvas
-    })
-  }
+      isShowingCursor: isCursorOverCanvas,
+    });
+  };
 
   componentDidMount() {
-    this.unsubscribe = this.props.subscribeToCanvasMouseOver(
-      this.handleCanvasMouseOver
-    )
+    this.unsubscribe = this.props.subscribeToCanvasMouseOver(this.handleCanvasMouseOver);
   }
 
   componentWillUnmount() {
     if (this.unsubscribe != null) {
-      this.unsubscribe()
-      this.unsubscribe = null
+      this.unsubscribe();
+      this.unsubscribe = null;
     }
   }
 
   render() {
-    const { isShowingCursor, leftOffset, date } = this.state
+    const { isShowingCursor, leftOffset, date } = this.state;
 
-    if (!isShowingCursor) return null
+    if (!isShowingCursor) return null;
 
-    const styles = createMarkerStylesWithLeftOffset(leftOffset)
+    const styles = createMarkerStylesWithLeftOffset(leftOffset);
 
-    return this.props.renderer({ styles, date })
+    return this.props.renderer({ styles, date });
   }
 }
 
@@ -75,17 +70,12 @@ const CursorMarkerWrapper = props => {
   return (
     <MarkerCanvasConsumer>
       {({ subscribeToMouseOver }) => {
-        return (
-          <CursorMarker
-            subscribeToCanvasMouseOver={subscribeToMouseOver}
-            {...props}
-          />
-        )
+        return <CursorMarker subscribeToCanvasMouseOver={subscribeToMouseOver} {...props} />;
       }}
     </MarkerCanvasConsumer>
-  )
-}
+  );
+};
 
-CursorMarkerWrapper.displayName = 'CursorMarkerWrapper'
+CursorMarkerWrapper.displayName = 'CursorMarkerWrapper';
 
-export default CursorMarkerWrapper
+export default CursorMarkerWrapper;

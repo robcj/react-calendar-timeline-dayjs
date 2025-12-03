@@ -47,6 +47,12 @@ export default [
       },
     },
 
+    settings: {
+      react: {
+        version: 'detect',
+      },
+    },
+
     rules: {
       // 'prettier/prettier': 'error', // Add this line to enforce Prettier rules
       'react/jsx-uses-react': 2,

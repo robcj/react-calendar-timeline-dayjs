@@ -4,7 +4,6 @@ import { noop } from '../utility/generic';
 
 const defaultContextState = {
   registerScroll: () => {
-    // eslint-disable-next-line
     console.warn('default registerScroll header used');
     return noop;
   },
