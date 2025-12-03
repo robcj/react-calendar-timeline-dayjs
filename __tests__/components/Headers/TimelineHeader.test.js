@@ -40,8 +40,8 @@ describe('TimelineHeader', () => {
     const headerContainer = getByTestId('headerContainer');
     const { color, background } = getComputedStyle(headerContainer);
 
-    expect(color).toBe('white');
-    expect(background).toBe('black');
+    expect(color).toBe('rgb(255, 255, 255)');
+    expect(background).toBe('rgb(0, 0, 0)');
   });
   it('Given TimelineHeader When pass style with overridden (display, width) Then it should not override the default values', () => {
     const { getByTestId } = renderTimelineWithLeftAndRightSidebar({
@@ -60,8 +60,8 @@ describe('TimelineHeader', () => {
     const rootDiv = getByTestId('headerRootDiv');
     const { color, background } = getComputedStyle(rootDiv);
 
-    expect(color).toBe('white');
-    expect(background).toBe('black');
+    expect(color).toBe('rgb(255, 255, 255)');
+    expect(background).toBe('rgb(0, 0, 0)');
   });
   it('Given TimelineHeader When pass calendarHeaderClassName Then it should be applied to the date header container', () => {
     const { getByTestId } = renderTimelineWithLeftAndRightSidebar({

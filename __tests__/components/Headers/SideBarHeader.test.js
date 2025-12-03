@@ -10,7 +10,7 @@ import '@testing-library/jest-dom';
 import { RenderHeadersWrapper } from '../../test-utility/header-renderer';
 import {
   renderSidebarHeaderWithCustomValues,
-  renderTwoSidebarHeadersWithCustomValues,
+  // renderTwoSidebarHeadersWithCustomValues,
 } from '../../test-utility/headerRenderers';
 
 describe('Testing SidebarHeader Component', () => {
@@ -28,7 +28,7 @@ describe('Testing SidebarHeader Component', () => {
       props: { style: { color: 'white' } },
     });
     const { color } = getComputedStyle(getByTestId('sidebarHeader'));
-    expect(color).toBe('white');
+    expect(color).toBe('rgb(255, 255, 255)');
   });
 
   it('Given SidebarHeader When a render function Then it will be rendered', () => {

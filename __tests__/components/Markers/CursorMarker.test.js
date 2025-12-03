@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, act, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import TimelineMarkers from 'lib/markers/public/TimelineMarkers';
 import CursorMarker from 'lib/markers/public/CursorMarker';
@@ -31,10 +31,11 @@ describe('CursorMarker', () => {
       </MarkerCanvasProvider>
     );
 
-    subscribeToMouseOverMock.mock.calls[0][0]({
-      isCursorOverCanvas: true,
+    act(() => {
+      subscribeToMouseOverMock.mock.calls[0][0]({
+        isCursorOverCanvas: true,
+      });
     });
-
     expect(getByTestId(defaultCursorMarkerTestId)).toBeInTheDocument();
   });
 
@@ -51,8 +52,10 @@ describe('CursorMarker', () => {
       </MarkerCanvasProvider>
     );
 
-    subscribeToMouseOverMock.mock.calls[0][0]({
-      isCursorOverCanvas: true,
+    act(() => {
+      subscribeToMouseOverMock.mock.calls[0][0]({
+        isCursorOverCanvas: true,
+      });
     });
 
     expect(getByTestId(customDataIdSelector)).toBeInTheDocument();
@@ -72,9 +75,11 @@ describe('CursorMarker', () => {
 
     const leftOffset = 1000;
 
-    subscribeToMouseOverMock.mock.calls[0][0]({
-      isCursorOverCanvas: true,
-      leftOffset,
+    act(() => {
+      subscribeToMouseOverMock.mock.calls[0][0]({
+        isCursorOverCanvas: true,
+        leftOffset,
+      });
     });
 
     const el = getByTestId(defaultCursorMarkerTestId);
@@ -97,11 +102,12 @@ describe('CursorMarker', () => {
 
     const now = Date.now();
 
-    subscribeToMouseOverMock.mock.calls[0][0]({
-      isCursorOverCanvas: true,
-      date: now,
+    act(() => {
+      subscribeToMouseOverMock.mock.calls[0][0]({
+        isCursorOverCanvas: true,
+        date: now,
+      });
     });
-
     expect(rendererMock).toHaveBeenCalledWith({
       styles: expect.any(Object),
       date: now,
@@ -133,13 +139,17 @@ describe('CursorMarker', () => {
 
     const { queryByTestId, getByText } = render(<RemoveCursorMarker />);
 
-    subscribeToMouseOverMock.mock.calls[0][0]({
-      isCursorOverCanvas: true,
+    act(() => {
+      subscribeToMouseOverMock.mock.calls[0][0]({
+        isCursorOverCanvas: true,
+      });
     });
 
     expect(queryByTestId(defaultCursorMarkerTestId)).toBeInTheDocument();
 
-    fireEvent.click(getByText('Hide Cursor Marker'));
+    act(() => {
+      fireEvent.click(getByText('Hide Cursor Marker'));
+    });
 
     expect(queryByTestId(defaultCursorMarkerTestId)).not.toBeInTheDocument();
   });

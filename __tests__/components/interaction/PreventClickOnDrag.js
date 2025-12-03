@@ -149,7 +149,7 @@ describe('PreventClickOnDrag', () => {
           <div>how are ya </div>
         </PreventClickOnDrag>
       )
-    ).toThrowError('React.Children.only expected to receive a single React element child');
+    ).toThrow('React.Children.only expected to receive a single React element child');
 
     jest.restoreAllMocks();
   });

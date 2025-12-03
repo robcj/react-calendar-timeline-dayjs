@@ -13,8 +13,10 @@ import { parsePxToNumbers } from '../../test-utility/index';
 
 import '@testing-library/jest-dom';
 import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 import utc from 'dayjs/plugin/utc';
 
+dayjs.extend(customParseFormat);
 dayjs.extend(utc);
 
 describe('CustomHeader Component Test', () => {
@@ -24,16 +26,16 @@ describe('CustomHeader Component Test', () => {
         unit: 'month',
         timelineState: {
           timelineUnit: 'month',
-          canvasTimeStart: dayjs.utc('1/6/2018', 'DD/MM/YYYY').valueOf(),
-          canvasTimeEnd: dayjs.utc('1/6/2020', 'DD/MM/YYYY').valueOf(),
-          visibleTimeStart: dayjs.utc('1/1/2019', 'DD/MM/YYYY').valueOf(),
-          visibleTimeEnd: dayjs.utc('1/1/2020', 'DD/MM/YYYY').valueOf(),
+          canvasTimeStart: dayjs.utc('1/6/2018', 'D/M/YYYY').valueOf(),
+          canvasTimeEnd: dayjs.utc('1/6/2020', 'D/M/YYYY').valueOf(),
+          visibleTimeStart: dayjs.utc('1/1/2019', 'D/M/YYYY').valueOf(),
+          visibleTimeEnd: dayjs.utc('1/1/2020', 'D/M/YYYY').valueOf(),
         },
       })
     );
     const intervals = getAllByTestId('customHeaderInterval');
-    const start = dayjs(intervals[0].textContent, 'DD/MM/YYYY');
-    const end = dayjs(intervals[1].textContent, 'DD/MM/YYYY');
+    const start = dayjs(intervals[0].textContent, 'D/M/YYYY');
+    const end = dayjs(intervals[1].textContent, 'D/M/YYYY');
     expect(end.diff(start, 'M')).toBe(1);
   });
   it('Given CustomHeader When pass a style props with (width, position) Then it should not override the default values', () => {
@@ -48,15 +50,16 @@ describe('CustomHeader Component Test', () => {
   });
 
   it('Given CustomHeader When pass a style props other than (width, position) Then it should rendered Correctly', () => {
+    const white = 'rgb(255, 255, 255)';
     const { getByTestId } = render(
-      getCustomHeadersInTimeline({ props: { style: { color: 'white' } } })
+      getCustomHeadersInTimeline({ props: { style: { color: white } } })
     );
     const { color } = getComputedStyle(getByTestId('customHeader'));
-    expect(color).toBe('white');
+    expect(color).toBe(white);
   });
 
   it('Given CustomHeader When pass an interval style with (width, position and left) Then it should not override the default values', () => {
-    const { getByTestId } = render(
+    const { getAllByTestId } = render(
       getCustomHeadersInTimeline({
         intervalStyle: {
           width: 0,
@@ -65,13 +68,13 @@ describe('CustomHeader Component Test', () => {
         },
       })
     );
-    const { width, position, left } = getComputedStyle(getByTestId('customHeaderInterval'));
+    const { width, position, left } = getComputedStyle(getAllByTestId('customHeaderInterval')[0]);
     expect(width).not.toBe('0px');
     expect(position).not.toBe('fixed');
     expect(left).not.toBe('1222222px');
   });
   it('Given CustomHeader When pass an interval style other than (width, position and left) Then it should rendered correctly', () => {
-    const { getByTestId } = render(
+    const { getAllByTestId } = render(
       getCustomHeadersInTimeline({
         intervalStyle: {
           lineHeight: '30px',
@@ -83,13 +86,15 @@ describe('CustomHeader Component Test', () => {
       })
     );
     const { lineHeight, textAlign, borderLeft, cursor, color } = getComputedStyle(
-      getByTestId('customHeaderInterval')
+      getAllByTestId('customHeaderInterval')[0]
     );
+    const black = 'rgb(0, 0, 0)'; // because borderLeft color is in rgb format
+    const white = 'rgb(255, 255, 255)';
+    expect(borderLeft).toBe(`1px solid ${black}`);
     expect(lineHeight).toBe('30px');
     expect(textAlign).toBe('center');
-    expect(borderLeft).toBe('1px solid black');
     expect(cursor).toBe('pointer');
-    expect(color).toBe('white');
+    expect(color).toBe(white);
   });
 
   it('Given a CustomHeader When not pass any unit prop Then it Should take the default timeline unit', () => {
@@ -98,16 +103,16 @@ describe('CustomHeader Component Test', () => {
         timelineState: {
           //default unit we are testing
           timelineUnit: 'month',
-          canvasTimeStart: dayjs.utc('1/6/2018', 'DD/MM/YYYY').valueOf(),
-          canvasTimeEnd: dayjs.utc('1/6/2020', 'DD/MM/YYYY').valueOf(),
-          visibleTimeStart: dayjs.utc('1/1/2019', 'DD/MM/YYYY').valueOf(),
-          visibleTimeEnd: dayjs.utc('1/1/2020', 'DD/MM/YYYY').valueOf(),
+          canvasTimeStart: dayjs.utc('1/6/2018', 'D/M/YYYY').valueOf(),
+          canvasTimeEnd: dayjs.utc('1/6/2020', 'D/M/YYYY').valueOf(),
+          visibleTimeStart: dayjs.utc('1/1/2019', 'D/M/YYYY').valueOf(),
+          visibleTimeEnd: dayjs.utc('1/1/2020', 'D/M/YYYY').valueOf(),
         },
       })
     );
     const intervals = getAllByTestId('customHeaderInterval');
-    const start = dayjs(intervals[0].textContent, 'DD/MM/YYYY');
-    const end = dayjs(intervals[1].textContent, 'DD/MM/YYYY');
+    const start = dayjs(intervals[0].textContent, 'D/M/YYYY');
+    const end = dayjs(intervals[1].textContent, 'D/M/YYYY');
     expect(end.diff(start, 'M')).toBe(1);
   });
 
